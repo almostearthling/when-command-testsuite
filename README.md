@@ -13,7 +13,7 @@ To perform the test, the `run.sh` command must be executed at the shell prompt. 
 * create an appropriate *items* dump file (tasks, conditions, signal handlers) from a template
 * dump the current *items* to a save file, and backup current configuration
 * replace configuration and import the new *items* file into **When**
-* launch the DBus test message server in a separate process [TBD]
+* launch the DBus test message server in a separate process
 * start **When** in a separate process
 * sleep a specified amount of time
 * perform filesystem actions for filesystem changes based conditions

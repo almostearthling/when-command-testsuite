@@ -23,7 +23,7 @@ To perform the test, the `run.sh` command must be executed at the shell prompt. 
 * shutdown current **When** instance
 * restore configuration and import saved *items* file.
 
-The user can choose, then, to restart **When** which will work with its prior configuration. Nevertheless, since these operations are performed against a possibly working installation, it's strongly adviced to use a specifically created environment: it can be either a virtual machine, or at least a different user possibly created for this purpose.
+The user can choose, then, to restart **When** which will work with its prior configuration. Nevertheless, since these operations are performed against a possibly working installation, it's strongly advised to use a specifically created environment: it can be either a virtual machine, or at least a different user possibly created for this purpose.
 
 Before running `run.sh`, all shell scripts should be made executable: do a `chmod a+x *.sh` in the test suite directory.
 

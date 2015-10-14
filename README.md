@@ -4,6 +4,8 @@ This is a test suite for the **When** scheduler. Since **When** is an interactiv
 
 *Note:* For the moment this test suite is not much more than a proof-of-concept: of course tests are incomplete, but this set of scripts and templates should provide a skeleton to add checks for specific features. Now the suite shows especially its structure, but its components can be amended to improve both readability and effectiveness.
 
+![Screenshot](https://raw.githubusercontent.com/almostearthling/when-command-testsuite/master/images/when-command-testsuite.jpg)
+
 
 ## Testing Process
 

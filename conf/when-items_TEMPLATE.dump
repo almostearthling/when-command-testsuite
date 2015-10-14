@@ -1,0 +1,317 @@
+{
+  "tasks": [
+    {
+      "task_name": "Task01-StatusOK",
+      "task_id": 1,
+      "type": "task",
+      "command": "[[BASE_DIR]]/taskcmd.sh",
+      "include_env": true,
+      "environment_vars": {},
+      "startup_dir": "[[BASE_DIR]]",
+      "success_status": 0,
+      "success_stdout": null,
+      "success_stderr": null,
+      "failure_status": null,
+      "failure_stdout": null,
+      "failure_stderr": null,
+      "match_exact": false,
+      "match_regexp": false,
+      "case_sensitive": false
+    },
+    {
+      "task_name": "Task02-StdErrKO_RE",
+      "task_id": 2,
+      "type": "task",
+      "command": "[[BASE_DIR]]/taskcmd.sh -e",
+      "include_env": true,
+      "environment_vars": {},
+      "startup_dir": "[[BASE_DIR]]",
+      "success_status": null,
+      "success_stdout": null,
+      "success_stderr": null,
+      "failure_status": null,
+      "failure_stdout": null,
+      "failure_stderr": "^test.*failed$",
+      "match_exact": false,
+      "match_regexp": true,
+      "case_sensitive": false
+    },
+    {
+      "task_name": "Task03-StatusKO",
+      "task_id": 3,
+      "type": "task",
+      "command": "[[BASE_DIR]]/taskcmd.sh -e",
+      "include_env": true,
+      "environment_vars": {},
+      "startup_dir": "[[BASE_DIR]]",
+      "success_status": 2,
+      "success_stdout": null,
+      "success_stderr": null,
+      "failure_status": null,
+      "failure_stdout": null,
+      "failure_stderr": null,
+      "match_exact": false,
+      "match_regexp": false,
+      "case_sensitive": false
+    },
+    {
+      "task_name": "Task04-StdErrOK_RE",
+      "task_id": 4,
+      "type": "task",
+      "command": "[[BASE_DIR]]/taskcmd.sh",
+      "include_env": true,
+      "environment_vars": {},
+      "startup_dir": "[[BASE_DIR]]",
+      "success_status": null,
+      "success_stdout": null,
+      "success_stderr": null,
+      "failure_status": null,
+      "failure_stdout": null,
+      "failure_stderr": "^bozo$",
+      "match_exact": false,
+      "match_regexp": true,
+      "case_sensitive": false
+    }
+  ],
+  "conditions": [
+    {
+      "cond_name": "Cond01-Time",
+      "cond_id": 1,
+      "type": "condition",
+      "subtype": "TimeBasedCondition",
+      "exec_sequence": true,
+      "break_success": false,
+      "break_failure": false,
+      "repeat": false,
+      "suspended": false,
+      "task_names": [
+         "Task01-StatusOK"
+      ],
+      "year": null,
+      "month": null,
+      "day": null,
+      "weekday": null,
+      "hour": [[TIMEOFDAY_HOUR]],
+      "minute": [[TIMEOFDAY_MINUTE]]
+    },
+    {
+      "cond_name": "Cond02-Interval",
+      "cond_id": 2,
+      "type": "condition",
+      "subtype": "IntervalBasedCondition",
+      "exec_sequence": true,
+      "break_success": false,
+      "break_failure": false,
+      "repeat": false,
+      "suspended": false,
+      "task_names": [
+         "Task02-StdErrKO_RE"
+      ],
+      "interval": [[INTERVAL_TIME]]
+    },
+    {
+      "cond_name": "Cond03-Idle",
+      "cond_id": 3,
+      "type": "condition",
+      "subtype": "IdleTimeBasedCondition",
+      "exec_sequence": true,
+      "break_success": false,
+      "break_failure": false,
+      "repeat": false,
+      "suspended": false,
+      "task_names": [
+         "Task03-StatusKO"
+      ],
+      "idle_secs": [[IDLE_TIME]]
+    },
+    {
+      "cond_name": "Cond04-Command_Status",
+      "cond_id": 4,
+      "type": "condition",
+      "subtype": "CommandBasedCondition",
+      "exec_sequence": true,
+      "break_success": false,
+      "break_failure": false,
+      "repeat": false,
+      "suspended": false,
+      "task_names": [
+         "Task01-StatusOK"
+      ],
+      "command": "[[BASE_DIR]]/test_succeed.sh",
+      "expected_status": 0,
+      "expected_stdout": null,
+      "expected_stderr": null,
+      "match_exact": false,
+      "match_regexp": false,
+      "case_sensitive": false
+    },
+    {
+      "cond_name": "Cond05-Command_Stderr",
+      "cond_id": 5,
+      "type": "condition",
+      "subtype": "CommandBasedCondition",
+      "exec_sequence": true,
+      "break_success": false,
+      "break_failure": false,
+      "repeat": false,
+      "suspended": false,
+      "task_names": [
+         "Task03-StatusKO"
+      ],
+      "command": "[[BASE_DIR]]/test_fail.sh -l",
+      "expected_status": null,
+      "expected_stdout": null,
+      "expected_stderr": "error",
+      "match_exact": false,
+      "match_regexp": false,
+      "case_sensitive": false
+    },
+    {
+      "cond_name": "Cond06-Command_Stdout",
+      "cond_id": 6,
+      "type": "condition",
+      "subtype": "CommandBasedCondition",
+      "exec_sequence": true,
+      "break_success": false,
+      "break_failure": false,
+      "repeat": false,
+      "suspended": false,
+      "task_names": [
+         "Task04-StdErrOK_RE"
+      ],
+      "command": "[[BASE_DIR]]/test_succeed.sh -l",
+      "expected_status": null,
+      "expected_stdout": "output",
+      "expected_stderr": null,
+      "match_exact": false,
+      "match_regexp": false,
+      "case_sensitive": false
+    },
+    {
+      "cond_name": "Cond08-CommandLine",
+      "cond_id": 8,
+      "type": "condition",
+      "subtype": "EventBasedCondition",
+      "exec_sequence": true,
+      "break_success": false,
+      "break_failure": false,
+      "repeat": false,
+      "suspended": false,
+      "task_names": [
+         "Task01-StatusOK", "Task03-StatusKO"
+      ],
+      "no_skip": true,
+      "event": "command_line:Cond08-CommandLine"
+    },
+    {
+      "cond_name": "Cond09-DBus",
+      "cond_id": 9,
+      "type": "condition",
+      "subtype": "EventBasedCondition",
+      "exec_sequence": true,
+      "break_success": false,
+      "break_failure": false,
+      "repeat": false,
+      "suspended": false,
+      "task_names": [
+         "Task03-StatusKO"
+      ],
+      "no_skip": true,
+      "event": "dbus_signal:SigHandler01-Test"
+    },
+    {
+      "cond_name": "Cond10-FileNotify",
+      "cond_id": 10,
+      "type": "condition",
+      "subtype": "PathNotifyBasedCondition",
+      "exec_sequence": true,
+      "break_success": false,
+      "break_failure": false,
+      "repeat": false,
+      "suspended": false,
+      "task_names": [
+         "Task01-StatusOK"
+      ],
+      "no_skip": true,
+      "watched_paths": [
+        "[[BASE_DIR]]/temp"
+      ]
+    },
+    {
+      "cond_name": "Cond11-DBus_is",
+      "cond_id": 11,
+      "type": "condition",
+      "subtype": "EventBasedCondition",
+      "exec_sequence": true,
+      "break_success": false,
+      "break_failure": false,
+      "repeat": false,
+      "suspended": false,
+      "task_names": [
+         "Task04-StdErrOK_RE"
+      ],
+      "no_skip": true,
+      "event": "dbus_signal:SigHandler03-Test_is"
+    },
+    {
+      "cond_name": "Cond12-DBus_s",
+      "cond_id": 12,
+      "type": "condition",
+      "subtype": "EventBasedCondition",
+      "exec_sequence": true,
+      "break_success": false,
+      "break_failure": false,
+      "repeat": false,
+      "suspended": false,
+      "task_names": [
+         "Task02-StdErrKO_RE"
+      ],
+      "no_skip": true,
+      "event": "dbus_signal:SigHandler02-Test_s"
+    }
+  ],
+  "signalhandlers": [
+    {
+      "type": "dbus_signal_handler",
+      "handler_name": "SigHandler01-Test",
+      "bus": "session",
+      "bus_name": "it.jks.EventEmitter",
+      "interface": "it.jks.EventEmitter",
+      "bus_path": "/it/jks/EventEmitter",
+      "defer": false,
+      "signal": "PushSignal_s",
+      "param_checks": [
+      ],
+      "verify_all_checks": true
+    },
+    {
+      "type": "dbus_signal_handler",
+      "handler_name": "SigHandler02-Test_s",
+      "bus": "session",
+      "bus_name": "it.jks.EventEmitter",
+      "interface": "it.jks.EventEmitter",
+      "bus_path": "/it/jks/EventEmitter",
+      "defer": false,
+      "signal": "PushSignal_s",
+      "param_checks": [
+        [ 0, null, "is", false, "BoZo"]
+      ],
+      "verify_all_checks": true
+    },
+    {
+      "type": "dbus_signal_handler",
+      "handler_name": "SigHandler03-Test_is",
+      "bus": "session",
+      "bus_name": "it.jks.EventEmitter",
+      "interface": "it.jks.EventEmitter",
+      "bus_path": "/it/jks/EventEmitter",
+      "defer": false,
+      "signal": "PushSignal_is",
+      "param_checks": [
+        [ 0, null, "is", false, 42],
+        [ 1, null, "matches", false, "B.*"]
+      ],
+      "verify_all_checks": true
+    }
+  ]
+}

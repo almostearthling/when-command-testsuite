@@ -218,18 +218,18 @@ errors=0
 failed=""
 
 # generated checks:
-check_task_condition Task01-StatusOK Cond01-Time
-check_task_condition Task02-StdErrKO_RE Cond02-Interval
-check_task_condition Task03-StatusKO Cond03-Idle
-check_task_condition Task01-StatusOK Cond04-Command_Status
-check_task_condition Task03-StatusKO Cond05-Command_Stderr
-check_task_condition Task04-StdErrOK_RE Cond06-Command_Stdout
-check_task_condition Task01-StatusOK Cond08-CommandLine
-check_task_condition Task03-StatusKO Cond08-CommandLine
-check_task_condition Task03-StatusKO Cond09-DBus
-check_task_condition Task01-StatusOK Cond10-FileNotify
-check_task_condition Task04-StdErrOK_RE Cond11-DBus_is
-check_task_condition Task02-StdErrKO_RE Cond12-DBus_s
+check_task_condition T01-status-chkOK_taskOK Cond01-Time
+check_task_condition T05-stderr-rjcRE_taskFAIL Cond02-Interval
+check_task_condition T03-status-chkFAIL_taskOK Cond03-Idle
+check_task_condition T01-status-chkOK_taskOK Cond04-Command_Status
+check_task_condition T03-status-chkFAIL_taskOK Cond05-Command_Stderr
+check_task_condition T06-stderr-chkRE_taskOK Cond06-Command_Stdout
+check_task_condition T01-status-chkOK_taskOK Cond08-CommandLine
+check_task_condition T03-status-chkFAIL_taskOK Cond08-CommandLine
+check_task_condition T03-status-chkFAIL_taskOK Cond09-DBus
+check_task_condition T01-status-chkOK_taskOK Cond10-FileNotify
+check_task_condition T06-stderr-chkRE_taskOK Cond11-DBus_is
+check_task_condition T05-stderr-rjcRE_taskFAIL Cond12-DBus_s
 
 # ... (more are to come)
 

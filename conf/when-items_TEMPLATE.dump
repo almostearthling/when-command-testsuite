@@ -1,7 +1,7 @@
 {
   "tasks": [
     {
-      "task_name": "Task01-StatusOK",
+      "task_name": "T01-status-chkOK_taskOK",
       "task_id": 1,
       "type": "task",
       "command": "[[BASE_DIR]]/taskcmd.sh",
@@ -19,25 +19,25 @@
       "case_sensitive": false
     },
     {
-      "task_name": "Task02-StdErrKO_RE",
+      "task_name": "T02-status-rjcOK_taskFAIL",
       "task_id": 2,
       "type": "task",
-      "command": "[[BASE_DIR]]/taskcmd.sh -e",
+      "command": "[[BASE_DIR]]/taskcmd.sh",
       "include_env": true,
       "environment_vars": {},
       "startup_dir": "[[BASE_DIR]]",
       "success_status": null,
       "success_stdout": null,
       "success_stderr": null,
-      "failure_status": null,
+      "failure_status": 0,
       "failure_stdout": null,
-      "failure_stderr": "^test.*failed$",
+      "failure_stderr": null,
       "match_exact": false,
-      "match_regexp": true,
+      "match_regexp": false,
       "case_sensitive": false
     },
     {
-      "task_name": "Task03-StatusKO",
+      "task_name": "T03-status-chkFAIL_taskOK",
       "task_id": 3,
       "type": "task",
       "command": "[[BASE_DIR]]/taskcmd.sh -e",
@@ -55,8 +55,98 @@
       "case_sensitive": false
     },
     {
-      "task_name": "Task04-StdErrOK_RE",
+      "task_name": "T04-status-rjcFAIL_taskFAIL",
       "task_id": 4,
+      "type": "task",
+      "command": "[[BASE_DIR]]/taskcmd.sh -e",
+      "include_env": true,
+      "environment_vars": {},
+      "startup_dir": "[[BASE_DIR]]",
+      "success_status": null,
+      "success_stdout": null,
+      "success_stderr": null,
+      "failure_status": 2,
+      "failure_stdout": null,
+      "failure_stderr": null,
+      "match_exact": false,
+      "match_regexp": false,
+      "case_sensitive": false
+    },
+    {
+      "task_name": "T05-stderr-rjcRE_taskFAIL",
+      "task_id": 5,
+      "type": "task",
+      "command": "[[BASE_DIR]]/taskcmd.sh -e",
+      "include_env": true,
+      "environment_vars": {},
+      "startup_dir": "[[BASE_DIR]]",
+      "success_status": null,
+      "success_stdout": null,
+      "success_stderr": null,
+      "failure_status": null,
+      "failure_stdout": null,
+      "failure_stderr": "^test.*failed$",
+      "match_exact": false,
+      "match_regexp": true,
+      "case_sensitive": false
+    },
+    {
+      "task_name": "T06-stderr-chkRE_taskOK",
+      "task_id": 6,
+      "type": "task",
+      "command": "[[BASE_DIR]]/taskcmd.sh -e",
+      "include_env": true,
+      "environment_vars": {},
+      "startup_dir": "[[BASE_DIR]]",
+      "success_status": null,
+      "success_stdout": null,
+      "success_stderr": "^test.*failed$",
+      "failure_status": null,
+      "failure_stdout": null,
+      "failure_stderr": null,
+      "match_exact": false,
+      "match_regexp": true,
+      "case_sensitive": false
+    },
+    {
+      "task_name": "T07-stderr-rjcSTR_taskFAIL",
+      "task_id": 7,
+      "type": "task",
+      "command": "[[BASE_DIR]]/taskcmd.sh -e",
+      "include_env": true,
+      "environment_vars": {},
+      "startup_dir": "[[BASE_DIR]]",
+      "success_status": null,
+      "success_stdout": null,
+      "success_stderr": null,
+      "failure_status": null,
+      "failure_stdout": null,
+      "failure_stderr": "failed",
+      "match_exact": false,
+      "match_regexp": false,
+      "case_sensitive": false
+    },
+    {
+      "task_name": "T08-stderr-chkSTR_taskOK",
+      "task_id": 8,
+      "type": "task",
+      "command": "[[BASE_DIR]]/taskcmd.sh",
+      "include_env": true,
+      "environment_vars": {},
+      "startup_dir": "[[BASE_DIR]]",
+      "success_status": null,
+      "success_stdout": null,
+      "success_stderr": "failed",
+      "failure_status": null,
+      "failure_stdout": null,
+      "failure_stderr": null,
+      "match_exact": false,
+      "match_regexp": false,
+      "case_sensitive": false
+    },
+    {
+      "task_name": "T09-stdout-rjcRE_taskFAIL",
+      "task_id": 9,
       "type": "task",
       "command": "[[BASE_DIR]]/taskcmd.sh",
       "include_env": true,
@@ -66,10 +156,64 @@
       "success_stdout": null,
       "success_stderr": null,
       "failure_status": null,
-      "failure_stdout": null,
-      "failure_stderr": "^bozo$",
+      "failure_stdout": "^test.*succeeded$",
+      "failure_stderr": null,
       "match_exact": false,
       "match_regexp": true,
+      "case_sensitive": false
+    },
+    {
+      "task_name": "T10-stdout-chkRE_taskOK",
+      "task_id": 10,
+      "type": "task",
+      "command": "[[BASE_DIR]]/taskcmd.sh",
+      "include_env": true,
+      "environment_vars": {},
+      "startup_dir": "[[BASE_DIR]]",
+      "success_status": null,
+      "success_stdout": "^test.*succeeded$",
+      "success_stderr": null,
+      "failure_status": null,
+      "failure_stdout": null,
+      "failure_stderr": null,
+      "match_exact": false,
+      "match_regexp": true,
+      "case_sensitive": false
+    },
+    {
+      "task_name": "T11-stdout-rjcSTR_taskFAIL",
+      "task_id": 11,
+      "type": "task",
+      "command": "[[BASE_DIR]]/taskcmd.sh",
+      "include_env": true,
+      "environment_vars": {},
+      "startup_dir": "[[BASE_DIR]]",
+      "success_status": null,
+      "success_stdout": null,
+      "success_stderr": null,
+      "failure_status": null,
+      "failure_stdout": "succeeded",
+      "failure_stderr": null,
+      "match_exact": false,
+      "match_regexp": false,
+      "case_sensitive": false
+    },
+    {
+      "task_name": "T12-stdout-chkSTR_taskOK",
+      "task_id": 12,
+      "type": "task",
+      "command": "[[BASE_DIR]]/taskcmd.sh",
+      "include_env": true,
+      "environment_vars": {},
+      "startup_dir": "[[BASE_DIR]]",
+      "success_status": null,
+      "success_stdout": "succeeded",
+      "success_stderr": null,
+      "failure_status": null,
+      "failure_stdout": null,
+      "failure_stderr": null,
+      "match_exact": false,
+      "match_regexp": false,
       "case_sensitive": false
     }
   ],
@@ -85,7 +229,7 @@
       "repeat": false,
       "suspended": false,
       "task_names": [
-         "Task01-StatusOK"
+         "T01-status-chkOK_taskOK"
       ],
       "year": null,
       "month": null,
@@ -105,7 +249,7 @@
       "repeat": false,
       "suspended": false,
       "task_names": [
-         "Task02-StdErrKO_RE"
+         "T05-stderr-rjcRE_taskFAIL"
       ],
       "interval": [[INTERVAL_TIME]]
     },
@@ -120,7 +264,7 @@
       "repeat": false,
       "suspended": false,
       "task_names": [
-         "Task03-StatusKO"
+         "T03-status-chkFAIL_taskOK"
       ],
       "idle_secs": [[IDLE_TIME]]
     },
@@ -135,7 +279,7 @@
       "repeat": false,
       "suspended": false,
       "task_names": [
-         "Task01-StatusOK"
+         "T01-status-chkOK_taskOK"
       ],
       "command": "[[BASE_DIR]]/test_succeed.sh",
       "expected_status": 0,
@@ -156,7 +300,7 @@
       "repeat": false,
       "suspended": false,
       "task_names": [
-         "Task03-StatusKO"
+         "T03-status-chkFAIL_taskOK"
       ],
       "command": "[[BASE_DIR]]/test_fail.sh -l",
       "expected_status": null,
@@ -177,7 +321,7 @@
       "repeat": false,
       "suspended": false,
       "task_names": [
-         "Task04-StdErrOK_RE"
+         "T06-stderr-chkRE_taskOK"
       ],
       "command": "[[BASE_DIR]]/test_succeed.sh -l",
       "expected_status": null,
@@ -198,7 +342,7 @@
       "repeat": false,
       "suspended": false,
       "task_names": [
-         "Task01-StatusOK", "Task03-StatusKO"
+         "T01-status-chkOK_taskOK", "T03-status-chkFAIL_taskOK"
       ],
       "no_skip": true,
       "event": "command_line:Cond08-CommandLine"
@@ -214,7 +358,7 @@
       "repeat": false,
       "suspended": false,
       "task_names": [
-         "Task03-StatusKO"
+         "T03-status-chkFAIL_taskOK"
       ],
       "no_skip": true,
       "event": "dbus_signal:SigHandler01-Test"
@@ -230,7 +374,7 @@
       "repeat": false,
       "suspended": false,
       "task_names": [
-         "Task01-StatusOK"
+         "T01-status-chkOK_taskOK"
       ],
       "no_skip": true,
       "watched_paths": [
@@ -248,7 +392,7 @@
       "repeat": false,
       "suspended": false,
       "task_names": [
-         "Task04-StdErrOK_RE"
+         "T06-stderr-chkRE_taskOK"
       ],
       "no_skip": true,
       "event": "dbus_signal:SigHandler03-Test_is"
@@ -264,7 +408,7 @@
       "repeat": false,
       "suspended": false,
       "task_names": [
-         "Task02-StdErrKO_RE"
+         "T05-stderr-rjcRE_taskFAIL"
       ],
       "no_skip": true,
       "event": "dbus_signal:SigHandler02-Test_s"

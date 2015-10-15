@@ -1,6 +1,6 @@
 # When Test Suite
 
-This is a test suite for the **When** scheduler. Since **When** is an interactive, single instance application, it's almost impossible to automate everything, although nowadays we are comfortable with simulated user interaction especially in web applications. In this case automation is made more difficult due to the fact that **When** is more similar to a system application. The test suite tries to exploit the most automation by using simple commands for tasks that log well-identifiable strings to a session log file, that can be identified by a machine.
+This is a test suite for the **When** scheduler. Since **When** is an interactive, single instance application, it's almost impossible to automate everything, although nowadays we are comfortable with simulated user interaction especially in web applications. In this case automation is made more difficult due to the fact that **When** is more similar to a system application. The test suite tries to exploit the most automation by using simple commands for tasks that log well-identifiable strings to a session log file, that can be interpreted by a machine.
 
 *Note:* For the moment this test suite is not much more than a proof-of-concept: of course tests are incomplete, but this set of scripts and templates should provide a skeleton to add checks for specific features. Now the suite shows especially its structure, but its components can be amended to improve both readability and effectiveness.
 
@@ -32,7 +32,7 @@ Before running `run.sh`, all shell scripts should be made executable: do a `chmo
 
 ### Requirements
 
-For the test suite to meaningfully function, the environment has to be specifically prepared: this means for example that all the dependencies (`xprintidle` and also the optional `python3-pyinotify`) must be installed. Also, **When** must be installed and configured for the user that will perform the test, that is `<INSTALLDIR>/when-command --install` should have been run at the time of testing. The tests must be performed from a terminal window in a graphic environment, right on the machine where **When** is tested, thus it cannot be tested in a remote (e.g. `ssh`) session. This is because **When** is a desktop application anyway, and the test instance must belong to a Gnome session desktop.
+For the test suite to meaningfully function, the environment has to be specifically prepared: this means for example that all the dependencies (`xprintidle` and also the optional `python3-pyinotify`) must be installed. Also, **When** must be installed and configured for the user that will perform the test, that is `<INSTALLDIR>/when-command --install` should have been run at the time of testing. The tests must be performed from a terminal window in a graphic environment, right on the machine where **When** is tested, thus it cannot be run in a remote (e.g. `ssh`) session. This is because **When** is a desktop application anyway, and the test instance must belong to a Gnome session desktop.
 
 ### What Can be Tested
 
@@ -52,11 +52,11 @@ There are also some *conditions* that are hard to test automatically, that is th
 
 The best way to test these conditions remains probably to interact with the applet and verify that certain events actually trigger certain tasks. Possibly in future versions of this test suite, the user will be asked to interact with the system, by enabling a network or plugging in a device.
 
-Also, the *Note* in **When**'s `README.md` file, *Conditions* paragraph, should be taken into account: conditions that trigger the same task at very close times should be avoided, because in case of two conditions triggering the same task at the same time only one of them will actually trigger it.
+Also, the *Note* in **When**'s `README.md` file, *Conditions* paragraph, should be taken into account: conditions that trigger the same task at very close times should be avoided, because in case of two conditions triggering the same task at the same time only one of them will actually result bound to it.
 
 ### How to Recover
 
-Hopefully nothing goes wrong, but in case it does the test suite saves the important configuration parts of the existing **When** instance in the `save` subdirectory of the test suite tree. In case it does, the following commands can be used to recover:
+Hopefully nothing goes wrong and the test suite reaches the final part of the `run.sh` script, where original configuration and items are restored. In case of failures preventing a full restore, the test suite saves the important configuration parts of the existing **When** instance in the `save` subdirectory of the test suite tree. The following commands can be used to recover:
 
 ```
 ~$ cd <when_test_home>

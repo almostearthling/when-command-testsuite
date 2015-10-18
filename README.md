@@ -19,9 +19,11 @@ To perform the test, the `run.sh` command must be executed at the shell prompt. 
 * start **When** in a separate process
 * sleep a specified amount of time
 * perform filesystem actions for filesystem changes based conditions
-* sleep some minutes
+* sleep some minutes to let the deferred tasks finish
+* export task history list to a text file
 * shutdown current **When** instance
-* restore configuration and import saved *items* file.
+* restore configuration and import saved *items* file
+* check test results and display outcome information.
 
 The user can choose, then, to restart **When** which will work with its prior configuration. Nevertheless, since these operations are performed against a possibly working installation, it's strongly advised to use a specifically created environment: it can be either a virtual machine, or at least a different user possibly created for this purpose.
 

@@ -36,6 +36,10 @@ Before running `run.sh`, all shell scripts should be made executable: do a `chmo
 
 For the test suite to meaningfully function, the environment has to be specifically prepared: this means for example that all the dependencies (`xprintidle` and also the optional `python3-pyinotify`) must be installed. Also, **When** must be installed and configured for the user that will perform the test, that is `<INSTALLDIR>/when-command --install` should have been run at the time of testing. The tests must be performed from a terminal window in a graphic environment, right on the machine where **When** is tested, thus it cannot be run in a remote (e.g. `ssh`) session. This is because **When** is a desktop application anyway, and the test instance must belong to a Gnome session desktop.
 
+### Configuration
+
+There is not much to be configured. However there are some parameters: the ones about times (`GRACE_TIME_MINUTES`, `SLEEP_TEST_MINUTES`, `SLEEP_DEFER_MINUTES`), for instance, can be modified. I tend to set them to something more than what is strictly needed, but not much more: it's safe to leave them alone. One parameter might need to be changed, that is the `WHEN_BASE` variable: if **When** was not installed in the usual `/opt/when-command` directory, it has to be set to the actual installation base directory.
+
 ### What Can be Tested
 
 This test suite will perform some tests about correct task execution after condition evaluation. In other words, only the *background* activity of **When** is tested. Of course some features that belong to the *interactive* side of **When** are hard to automatically check, and are left out. These aspects include:

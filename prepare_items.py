@@ -5,7 +5,7 @@ import sys
 import time
 
 
-# constants
+# constants amd configuration
 TIME_EVENT_AFTER_MINUTES = 2
 IDLE_TIME_MINUTES = 3
 INTERVAL_MINUTES = 5
@@ -32,15 +32,20 @@ to_replace = {
     'INTERVAL_TIME': INTERVAL_MINUTES * 60,
 }
 
+
 def replace_in_text(s):
     for x in to_replace:
         s = s.replace("[[%s]]" % x, str(to_replace[x]))
     return s
 
+
+# allow comments in templates: all lines that begin with '#' are discarded
 output = open(OUT_FILE, 'w')
 with open(TEMPLATE) as f:
     for line in f:
-        output.write(replace_in_text(line))
+        valid_line = line.lstrip()
+        if valid_line and valid_line[0] != '#':
+            output.write(replace_in_text(line))
 output.close()
 
 # end.

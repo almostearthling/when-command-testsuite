@@ -90,7 +90,7 @@ echo
 
 # verify that When is installed, and if not bail out
 echo_prompt "Verifying When installation... "
-if [ -d $CONF_BASE -a -f $CONF_BASE/when-command.conf ] ; then
+if [ -d $CONF_BASE -a -f $CONF_BASE/when-command.conf ]; then
   echo_ok
 else
   echo "not installed: please install it and run tests."
@@ -135,7 +135,7 @@ if discard_out $WHEN --query ; then
   sleep 5
 fi
 discard_out cp $CONF_BASE/when-command.conf $BASE/save
-if [ -f $CONF_BASE/when-command.pause ] ; then
+if [ -f $CONF_BASE/when-command.pause ]; then
   discard_out mv $CONF_BASE/when-command.pause $BASE/save
 fi
 $WHEN --export $BASE/save/when-items-saved.dump
@@ -147,7 +147,7 @@ discard_out $WHEN --clear
 discard_out cp $BASE/conf/when-command.conf $CONF_BASE
 discard_out python3 prepare_items.py
 discard_out $WHEN --import $BASE/conf/when-items.dump
-if [ "$?" = "0" ] ; then
+if [ "$?" = "0" ]; then
   echo_ok
 else
   exit_fail
@@ -167,7 +167,7 @@ echo_ok
 # launch the new instance of When in a separate process
 echo_prompt "Starting test instance of When."
 nohup $WHEN > /dev/null 2>&1 &
-if [ "$?" = "0" ] ; then
+if [ "$?" = "0" ]; then
   echo_ok
 else
   exit_fail
@@ -193,12 +193,19 @@ echo_prompt "Done."
 echo_ok
 
 
+# export task history to a text file
+echo_prompt "Export task history to log directory..."
+discard_out $WHEN --export-history $BASE/log/when-task-history.csv
+sleep 1
+echo_ok
+
+
 # shut down current instance
 echo_prompt "Shutting down test instance of When..."
 if discard_out $WHEN --query ; then
   discard_out $WHEN --shutdown
 fi
-if [ "$?" = "0" ] ; then
+if [ "$?" = "0" ]; then
   sleep 5
   echo_ok
 else
@@ -208,16 +215,17 @@ fi
 # ask DBus server to shut down asap
 echo_prompt "Shutting down DBus signal emitter..."
 discard_out rm $BASE/temp/start_dbus.tmp
+sleep 5
 echo_ok
 
 
 # *** CHECK TEST LOG FILE ***
-echo_prompt "Performing tests on log file..."
-# do checks on log (and hope for the best)
+echo_prompt "Performing tests on log file."
+# do checks on log
 errors=0
 failed=""
 
-# generated checks:
+# specific checks
 check_task_condition T01-status-chkOK_taskOK Cond01-Time
 check_task_condition T05-stderr-rjcRE_taskFAIL Cond02-Interval
 check_task_condition T03-status-chkFAIL_taskOK Cond03-Idle
@@ -230,25 +238,60 @@ check_task_condition T03-status-chkFAIL_taskOK Cond09-DBus
 check_task_condition T01-status-chkOK_taskOK Cond10-FileNotify
 check_task_condition T06-stderr-chkRE_taskOK Cond11-DBus_is
 check_task_condition T05-stderr-rjcRE_taskFAIL Cond12-DBus_s
-
 # ... (more are to come)
-
 if [ "$errors" -gt "0" ]; then
   echo_fail
 else
   echo_ok
 fi
+
+# *** CHECK TEST TASKS OUTCOME ***
+echo_prompt "Performing tests on task history file..."
+# do checks on history
+task_errors=0
+task_failed=""
+
+# spaces in the history file have to be removed
+for x in `grep -v ^ITEM_ID $BASE/log/when-task-history.csv | sed "s/ /_/g"` ; do
+  v_task=`echo $x | cut -d ";" -f 4`
+  v_result=`echo $x | cut -d ";" -f 6`
+  case $v_task in
+    *_taskOK)
+      if [ "$v_result" = "failure" ]; then
+        task_errors=$(( $task_errors + 1 ))
+        task_failed="$task_failed $v_task"
+      fi
+      ;;
+    *_taskFAIL)
+      if [ "$v_result" = "success" ]; then
+        task_errors=$(( $task_errors + 1 ))
+        task_failed="$task_failed $v_task"
+      fi
+      ;;
+    *)
+      task_errors=$(( $task_errors + 1 ))
+      task_failed="$task_failed $v_task"
+      ;;
+  esac
+done
+
+if [ "$task_errors" -gt "0" ]; then
+  echo_fail
+else
+  echo_ok
+fi
+
 # *** END OF TESTS
 
 # restore old When configuration
-echo_prompt "Restoring configuration..."
+echo_prompt "Restoring configuration."
 discard_out $WHEN --clear
-if [ -f $BASE/save/when-command.pause ] ; then
+if [ -f $BASE/save/when-command.pause ]; then
   discard_out mv $BASE/save/when-command.pause $CONF_BASE
 fi
 discard_out cp $BASE/save/when-command.conf $CONF_BASE
 discard_out $WHEN --import $BASE/save/when-items-saved.dump
-if [ "$?" = "0" ] ; then
+if [ "$?" = "0" ]; then
   echo_ok
 else
   echo_fail
@@ -260,13 +303,21 @@ discard_out rm $BASE/temp/*
 echo_ok
 
 echo
-if [ "$errors" = "0" ]; then
+if [ "$errors" = "0" -a "$task_errors" = "0" ]; then
   echo "All tests succeeded! This release of When can be almost safely shipped."
 else
-  echo "There are $errors failed tests:"
-  for x in $failed; do
-    echo "- $x"
-  done
+  if [ "$errors" -gt "0" ]; then
+    echo "There are $errors failed tests:"
+    for x in $failed; do
+      echo -e "\xE2\x80\xA2 $x"
+    done
+  fi
+  if [ "$task_errors" -gt "0" ]; then
+    echo "There are $task_errors unexpected task results:"
+    for x in $task_failed; do
+      echo -e "\xE2\x80\xA2 $x"
+    done
+  fi
   echo
   echo "This release of When has to be reviewed before shipping."
 fi

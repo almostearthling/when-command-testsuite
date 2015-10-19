@@ -1,6 +1,6 @@
 # When Test Suite
 
-This is a test suite for the **When** scheduler. Since **When** is an interactive, single instance application, it's almost impossible to automate everything, although nowadays we are comfortable with simulated user interaction especially in web applications. In this case automation is made more difficult due to the fact that **When** is more similar to a system application. The test suite tries to exploit the most automation by using simple commands for tasks that log well-identifiable strings to a session log file, that can be interpreted by a machine.
+This is a test suite for the **When** scheduler. Since **When** is an interactive, single instance application, it's almost impossible to automate everything, although nowadays we are comfortable with simulated user interaction especially in web applications. In this case automation is made more difficult due to the fact that **When** is more similar to a system application. The test suite tries to exploit the most automation by using simple commands for tasks that log well-identifiable strings to a session log file, that can be interpreted using simple scripts.
 
 *Note:* For the moment this test suite is not much more than a proof-of-concept: of course tests are incomplete, but this set of scripts and templates should provide a skeleton to add checks for specific features. Now the suite shows especially its structure, but its components can be amended to improve both readability and effectiveness.
 

@@ -243,6 +243,7 @@
   // conditions (should have an available task or list of available tasks
   // as a consequence): see ROADMAP.md for conditions to implement
   "conditions": [
+    // Time based condition, not recurring, task succeeds
     {
       "cond_name": "Cond01-Time",
       "cond_id": 1,
@@ -263,6 +264,7 @@
       "hour": [[TIMEOFDAY_HOUR]],
       "minute": [[TIMEOFDAY_MINUTE]]
     },
+    // Interval based condition, not recurring, task fails
     {
       "cond_name": "Cond02-Interval",
       "cond_id": 2,
@@ -278,6 +280,7 @@
       ],
       "interval": [[INTERVAL_TIME]]
     },
+    // Idle time based condition, not recurring, task succeeds
     {
       "cond_name": "Cond03-Idle",
       "cond_id": 3,
@@ -293,6 +296,7 @@
       ],
       "idle_secs": [[IDLE_TIME]]
     },
+    // Command based condition, test ok (success), not recurring, task succeeds
     {
       "cond_name": "Cond04-Command_Status",
       "cond_id": 4,
@@ -314,6 +318,29 @@
       "match_regexp": false,
       "case_sensitive": false
     },
+    // Command based condition, test KO (success), not recurring, no task
+    {
+      "cond_name": "Cond74-Command_Status",
+      "cond_id": 74,
+      "type": "condition",
+      "subtype": "CommandBasedCondition",
+      "exec_sequence": true,
+      "break_success": false,
+      "break_failure": false,
+      "repeat": false,
+      "suspended": false,
+      "task_names": [
+         "T01-status-chkOK_taskOK"
+      ],
+      "command": "[[BASE_DIR]]/test_succeed.sh",
+      "expected_status": 99,
+      "expected_stdout": null,
+      "expected_stderr": null,
+      "match_exact": false,
+      "match_regexp": false,
+      "case_sensitive": false
+    },
+    // Command based condition, test ok (failure), not recurring, task succeeds
     {
       "cond_name": "Cond05-Command_Stderr",
       "cond_id": 5,
@@ -335,6 +362,73 @@
       "match_regexp": false,
       "case_sensitive": false
     },
+    // Command based condition, test KO (failure), not recurring, no task
+    {
+      "cond_name": "Cond75-Command_Stderr",
+      "cond_id": 75,
+      "type": "condition",
+      "subtype": "CommandBasedCondition",
+      "exec_sequence": true,
+      "break_success": false,
+      "break_failure": false,
+      "repeat": false,
+      "suspended": false,
+      "task_names": [
+         "T03-status-chkFAIL_taskOK"
+      ],
+      "command": "[[BASE_DIR]]/test_fail.sh -l",
+      "expected_status": null,
+      "expected_stdout": null,
+      "expected_stderr": "wrongvalue",
+      "match_exact": false,
+      "match_regexp": false,
+      "case_sensitive": false
+    },
+    // Command based condition, test ok (failure), not recurring, task succeeds
+    {
+      "cond_name": "Cond85-Command_Stderr",
+      "cond_id": 85,
+      "type": "condition",
+      "subtype": "CommandBasedCondition",
+      "exec_sequence": true,
+      "break_success": false,
+      "break_failure": false,
+      "repeat": false,
+      "suspended": false,
+      "task_names": [
+         "T03-status-chkFAIL_taskOK"
+      ],
+      "command": "[[BASE_DIR]]/test_fail.sh",
+      "expected_status": null,
+      "expected_stdout": null,
+      "expected_stderr": "error",
+      "match_exact": true,
+      "match_regexp": false,
+      "case_sensitive": false
+    },
+    // Command based condition, test ok (failure), not recurring, task succeeds
+    {
+      "cond_name": "Cond95-Command_Stderr",
+      "cond_id": 95,
+      "type": "condition",
+      "subtype": "CommandBasedCondition",
+      "exec_sequence": true,
+      "break_success": false,
+      "break_failure": false,
+      "repeat": false,
+      "suspended": false,
+      "task_names": [
+         "T03-status-chkFAIL_taskOK"
+      ],
+      "command": "[[BASE_DIR]]/test_fail.sh",
+      "expected_status": null,
+      "expected_stdout": null,
+      "expected_stderr": "er[a-z]+",
+      "match_exact": false,
+      "match_regexp": true,
+      "case_sensitive": false
+    },
+    // Command based condition, test ok (success), not recurring, task succeeds
     {
       "cond_name": "Cond06-Command_Stdout",
       "cond_id": 6,
@@ -356,6 +450,73 @@
       "match_regexp": false,
       "case_sensitive": false
     },
+    // Command based condition, test ok (success), not recurring, task succeeds
+    {
+      "cond_name": "Cond76-Command_Stdout",
+      "cond_id": 76,
+      "type": "condition",
+      "subtype": "CommandBasedCondition",
+      "exec_sequence": true,
+      "break_success": false,
+      "break_failure": false,
+      "repeat": false,
+      "suspended": false,
+      "task_names": [
+         "T06-stderr-chkRE_taskOK"
+      ],
+      "command": "[[BASE_DIR]]/test_succeed.sh -l",
+      "expected_status": null,
+      "expected_stdout": "wrongvalue",
+      "expected_stderr": null,
+      "match_exact": false,
+      "match_regexp": false,
+      "case_sensitive": false
+    },
+    // Command based condition, test ok (success), not recurring, task succeeds
+    {
+      "cond_name": "Cond86-Command_Stdout",
+      "cond_id": 86,
+      "type": "condition",
+      "subtype": "CommandBasedCondition",
+      "exec_sequence": true,
+      "break_success": false,
+      "break_failure": false,
+      "repeat": false,
+      "suspended": false,
+      "task_names": [
+         "T06-stderr-chkRE_taskOK"
+      ],
+      "command": "[[BASE_DIR]]/test_succeed.sh",
+      "expected_status": null,
+      "expected_stdout": "output",
+      "expected_stderr": null,
+      "match_exact": true,
+      "match_regexp": false,
+      "case_sensitive": false
+    },
+    // Command based condition, test ok (success), not recurring, task succeeds
+    {
+      "cond_name": "Cond96-Command_Stdout",
+      "cond_id": 96,
+      "type": "condition",
+      "subtype": "CommandBasedCondition",
+      "exec_sequence": true,
+      "break_success": false,
+      "break_failure": false,
+      "repeat": false,
+      "suspended": false,
+      "task_names": [
+         "T06-stderr-chkRE_taskOK"
+      ],
+      "command": "[[BASE_DIR]]/test_succeed.sh",
+      "expected_status": null,
+      "expected_stdout": "ou[a-z]+",
+      "expected_stderr": null,
+      "match_exact": false,
+      "match_regexp": true,
+      "case_sensitive": false
+    },
+    // Event based condition, not recurring, tasks succeed
     {
       "cond_name": "Cond08-CommandLine",
       "cond_id": 8,
@@ -372,6 +533,7 @@
       "no_skip": true,
       "event": "command_line:Cond08-CommandLine"
     },
+    // DBus based condition, test ok, not recurring, task succeeds
     {
       "cond_name": "Cond09-DBus",
       "cond_id": 9,
@@ -388,6 +550,7 @@
       "no_skip": true,
       "event": "dbus_signal:SigHandler01-Test"
     },
+    // Filenotify based condition, not recurring, task succeeds
     {
       "cond_name": "Cond10-FileNotify",
       "cond_id": 10,
@@ -406,6 +569,7 @@
         "[[BASE_DIR]]/temp"
       ]
     },
+    // DBus based condition, test ok, not recurring, task succeeds
     {
       "cond_name": "Cond11-DBus_is",
       "cond_id": 11,
@@ -422,6 +586,7 @@
       "no_skip": true,
       "event": "dbus_signal:SigHandler03-Test_is"
     },
+    // DBus based condition, test ok, not recurring, task succeeds
     {
       "cond_name": "Cond12-DBus_s",
       "cond_id": 12,

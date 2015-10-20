@@ -238,6 +238,14 @@ check_task_condition T03-status-chkFAIL_taskOK Cond09-DBus
 check_task_condition T01-status-chkOK_taskOK Cond10-FileNotify
 check_task_condition T06-stderr-chkRE_taskOK Cond11-DBus_is
 check_task_condition T05-stderr-rjcRE_taskFAIL Cond12-DBus_s
+check_task_condition T03-status-chkFAIL_taskOK Cond85-Command_Stderr
+check_task_condition T03-status-chkFAIL_taskOK Cond95-Command_Stderr
+check_task_condition T06-stderr-chkRE_taskOK Cond76-Command_Stdout
+check_task_condition T06-stderr-chkRE_taskOK Cond86-Command_Stdout
+check_task_condition T06-stderr-chkRE_taskOK Cond96-Command_Stdout
+
+checkfail_task_condition T01-status-chkOK_taskOK Cond74-Command_Status
+checkfail_task_condition T03-status-chkFAIL_taskOK Cond75-Command_Stderr
 # ... (more are to come)
 if [ "$errors" -gt "0" ]; then
   echo_fail

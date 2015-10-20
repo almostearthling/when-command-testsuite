@@ -22,8 +22,15 @@ List of achievements and expectations for the When applet test suite.
   1. Occurring
 * Test *command based conditions*
   1. Check exit status, positive
+  2. Check exit status, negative
+  3. Check stdout, positive
   4. Check stdout, positive substring
+  5. Check stdout, positive match RE
+  6. Check stdout, negative
+  7. Check stderr, positive
   8. Check stderr, positive substring
+  9. Check stderr, positive match RE
+  10. Check stderr, negative
 * Test *idle time based conditions*
   1. Occurring
 * Test *event based conditions*
@@ -49,14 +56,6 @@ List of achievements and expectations for the When applet test suite.
   3. Recurring
 * Test *time based conditions*
   2. Not occurring
-* Test *command based conditions*
-  2. Check exit status, negative
-  3. Check stdout, positive
-  5. Check stdout, positive match RE
-  6. Check stdout, negative
-  7. Check stderr, positive
-  9. Check stderr, positive match RE
-  10. Check stderr, negative
 * Test *idle time based conditions*
   2. Not occurring
   3. Recurring

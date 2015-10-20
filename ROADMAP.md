@@ -62,16 +62,16 @@ List of achievements and expectations for the When applet test suite.
 * Test *event based conditions*
   1. Startup
   2. Shutdown
-  3. Suspend [*emulation*]
-  4. Resume [*emulation*]
-  5. Connect storage [*emulation*]
-  6. Disconnect storage [*emulation*]
-  7. Join network [*emulation*]
-  8. Leave network [*emulation*]
-  9. Start screensaver [*emulation*]
-  10. Exit screensaver [*emulation*]
-  11. Session lock [*emulation*]
-  12. Session unlock [*emulation*]
+  3. Suspend [*emulated or optional*]
+  4. Resume [*emulated or optional*]
+  5. Connect storage [*emulated or optional*]
+  6. Disconnect storage [*emulated or optional*]
+  7. Join network [*emulated or optional*]
+  8. Leave network [*emulated or optional*]
+  9. Start screensaver [*emulated or optional*]
+  10. Exit screensaver [*emulated or optional*]
+  11. Session lock [*emulated or optional*]
+  12. Session unlock [*emulated or optional*]
 * Test *file change based conditions*
   2. Not occurring for a directory
   3. Occurring for a single file

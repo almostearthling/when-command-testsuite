@@ -328,6 +328,7 @@ else
   fi
   echo
   echo "This release of When has to be reviewed before shipping."
+  exit 2
 fi
 
 # end.

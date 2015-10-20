@@ -44,7 +44,7 @@ output = open(OUT_FILE, 'w')
 with open(TEMPLATE) as f:
     for line in f:
         valid_line = line.lstrip()
-        if valid_line and valid_line[0] != '#':
+        if valid_line and valid_line[0] != '#' and valid_line[:2] != '//':
             output.write(replace_in_text(line))
 output.close()
 

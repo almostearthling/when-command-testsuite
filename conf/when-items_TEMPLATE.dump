@@ -1,5 +1,6 @@
 {
   "tasks": [
+    // check exit status, positive
     {
       "task_name": "T01-status-chkOK_taskOK",
       "task_id": 1,
@@ -18,6 +19,7 @@
       "match_regexp": false,
       "case_sensitive": false
     },
+    // check exit status, negative (reject positive)
     {
       "task_name": "T02-status-rjcOK_taskFAIL",
       "task_id": 2,
@@ -36,6 +38,7 @@
       "match_regexp": false,
       "case_sensitive": false
     },
+    // check exit status, positive (accept negative)
     {
       "task_name": "T03-status-chkFAIL_taskOK",
       "task_id": 3,
@@ -54,6 +57,7 @@
       "match_regexp": false,
       "case_sensitive": false
     },
+    // check exit status, negative (reject negative)
     {
       "task_name": "T04-status-rjcFAIL_taskFAIL",
       "task_id": 4,
@@ -72,6 +76,7 @@
       "match_regexp": false,
       "case_sensitive": false
     },
+    // check exit status, negative (reject negative), RE
     {
       "task_name": "T05-stderr-rjcRE_taskFAIL",
       "task_id": 5,
@@ -90,6 +95,7 @@
       "match_regexp": true,
       "case_sensitive": false
     },
+    // check exit status, positive (accept negative), RE
     {
       "task_name": "T06-stderr-chkRE_taskOK",
       "task_id": 6,
@@ -108,6 +114,7 @@
       "match_regexp": true,
       "case_sensitive": false
     },
+    // check exit status, negative (reject negative)
     {
       "task_name": "T07-stderr-rjcSTR_taskFAIL",
       "task_id": 7,
@@ -126,6 +133,7 @@
       "match_regexp": false,
       "case_sensitive": false
     },
+    // check exit status, positive (accept negative)
     {
       "task_name": "T08-stderr-chkSTR_taskOK",
       "task_id": 8,
@@ -144,6 +152,7 @@
       "match_regexp": false,
       "case_sensitive": false
     },
+    // check exit status, negative (reject positive), RE
     {
       "task_name": "T09-stdout-rjcRE_taskFAIL",
       "task_id": 9,
@@ -162,6 +171,7 @@
       "match_regexp": true,
       "case_sensitive": false
     },
+    // check exit status, positive (accept positive), RE
     {
       "task_name": "T10-stdout-chkRE_taskOK",
       "task_id": 10,
@@ -180,6 +190,7 @@
       "match_regexp": true,
       "case_sensitive": false
     },
+    // check exit status, negative (reject positive)
     {
       "task_name": "T11-stdout-rjcSTR_taskFAIL",
       "task_id": 11,
@@ -198,6 +209,7 @@
       "match_regexp": false,
       "case_sensitive": false
     },
+    // check exit status, positive (reject positive)
     {
       "task_name": "T12-stdout-chkSTR_taskOK",
       "task_id": 12,

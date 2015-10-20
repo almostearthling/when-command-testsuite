@@ -330,7 +330,7 @@
       "repeat": false,
       "suspended": false,
       "task_names": [
-         "T01-status-chkOK_taskOK"
+         "T04-status-rjcFAIL_taskFAIL"
       ],
       "command": "[[BASE_DIR]]/test_succeed.sh",
       "expected_status": 99,
@@ -374,7 +374,7 @@
       "repeat": false,
       "suspended": false,
       "task_names": [
-         "T03-status-chkFAIL_taskOK"
+         "T05-stderr-rjcRE_taskFAIL"
       ],
       "command": "[[BASE_DIR]]/test_fail.sh -l",
       "expected_status": null,
@@ -396,7 +396,7 @@
       "repeat": false,
       "suspended": false,
       "task_names": [
-         "T03-status-chkFAIL_taskOK"
+         "T06-stderr-chkRE_taskOK"
       ],
       "command": "[[BASE_DIR]]/test_fail.sh",
       "expected_status": null,
@@ -418,7 +418,7 @@
       "repeat": false,
       "suspended": false,
       "task_names": [
-         "T03-status-chkFAIL_taskOK"
+         "T07-stderr-rjcSTR_taskFAIL"
       ],
       "command": "[[BASE_DIR]]/test_fail.sh",
       "expected_status": null,
@@ -450,7 +450,7 @@
       "match_regexp": false,
       "case_sensitive": false
     },
-    // Command based condition, test ok (success), not recurring, task succeeds
+    // Command based condition, test KO (failure), not recurring, task succeeds
     {
       "cond_name": "Cond76-Command_Stdout",
       "cond_id": 76,
@@ -462,7 +462,7 @@
       "repeat": false,
       "suspended": false,
       "task_names": [
-         "T06-stderr-chkRE_taskOK"
+         "T08-stderr-chkSTR_taskOK"
       ],
       "command": "[[BASE_DIR]]/test_succeed.sh -l",
       "expected_status": null,
@@ -484,11 +484,11 @@
       "repeat": false,
       "suspended": false,
       "task_names": [
-         "T06-stderr-chkRE_taskOK"
+         "T09-stdout-rjcRE_taskFAIL"
       ],
       "command": "[[BASE_DIR]]/test_succeed.sh",
       "expected_status": null,
-      "expected_stdout": "output",
+      "expected_stdout": "success",
       "expected_stderr": null,
       "match_exact": true,
       "match_regexp": false,
@@ -506,11 +506,11 @@
       "repeat": false,
       "suspended": false,
       "task_names": [
-         "T06-stderr-chkRE_taskOK"
+         "T10-stdout-chkRE_taskOK"
       ],
       "command": "[[BASE_DIR]]/test_succeed.sh",
       "expected_status": null,
-      "expected_stdout": "ou[a-z]+",
+      "expected_stdout": "su[a-z]+",
       "expected_stderr": null,
       "match_exact": false,
       "match_regexp": true,

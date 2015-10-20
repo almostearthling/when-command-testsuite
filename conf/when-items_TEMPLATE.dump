@@ -1,4 +1,14 @@
+// when-items_TEMPLATE.dump
+// This is a JSON file containing the items for the when-command test session.
+// It is different from an actual JSON file in the sense that it also allows
+// comments in it, and supports some macros (double-brackets keywords) that are
+// substituted with appropriate strings in the result file. The preprocessor
+// strips out comments from the resulting file. A new condition can be created
+// by copying an existing one (there are at least one for each type) and then
+// changing relevant parts. The same can be done for signal handlers.
+
 {
+  // available tasks
   "tasks": [
     // check exit status, positive
     {
@@ -229,6 +239,9 @@
       "case_sensitive": false
     }
   ],
+
+  // conditions (should have an available task or list of available tasks
+  // as a consequence): see ROADMAP.md for conditions to implement
   "conditions": [
     {
       "cond_name": "Cond01-Time",
@@ -426,6 +439,8 @@
       "event": "dbus_signal:SigHandler02-Test_s"
     }
   ],
+
+  // DBus signal handlers: see ROADMAP.md for a list of handlers to implement
   "signalhandlers": [
     {
       "type": "dbus_signal_handler",

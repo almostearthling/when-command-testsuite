@@ -39,10 +39,21 @@ List of achievements and expectations for the When applet test suite.
   1. Occurring for a directory
 * Test *DBus custom event based conditions*
   1. Check signal alone
-  2. Check signal arguments: number, equality, positive
-  8. Check signal arguments: string, equality, positive
-  14. Check signal arguments: string, RE match, positive
-  22. Check signal multiple arguments, check all, positive
+  2. Check signal arguments: number, equality
+  3. Check signal arguments: number, not equality
+  4. Check signal arguments: number, greater-than
+  5. Check signal arguments: number, not greater-than
+  6. Check signal arguments: number, less-than
+  7. Check signal arguments: number, not less-than
+  8. Check signal arguments: string, equality
+  9. Check signal arguments: string, not equality
+  10. Check signal arguments: string, greater-than
+  11. Check signal arguments: string, not greater-than
+  12. Check signal arguments: string, less-than
+  13. Check signal arguments: string, not less-than
+  14. Check signal arguments: string, RE match
+  22. Check signal multiple arguments, check all
+  23. Check signal multiple arguments, check any
 * Easy to understand test visualization
 * Fancy output
 * Progress bars for lengthy operations
@@ -58,7 +69,6 @@ List of achievements and expectations for the When applet test suite.
   2. Not occurring
 * Test *idle time based conditions*
   2. Not occurring
-  3. Recurring
 * Test *event based conditions*
   1. Startup
   2. Shutdown
@@ -77,26 +87,13 @@ List of achievements and expectations for the When applet test suite.
   3. Occurring for a single file
   4. Not occurring for a single file
 * Test *DBus custom event based conditions* (*NOTE:* Multiple number/string tests can be combined into a single *multiple arguments* test.)
-  3. Check signal arguments: number, equality, negative
-  4. Check signal arguments: number, greater-than, positive
-  5. Check signal arguments: number, greater-than, negative
-  6. Check signal arguments: number, less-than, positive
-  7. Check signal arguments: number, less-than, negative
-  9. Check signal arguments: string, equality, negative
-  10. Check signal arguments: string, greater-than, positive
-  11. Check signal arguments: string, greater-than, negative
-  12. Check signal arguments: string, less-than, positive
-  13. Check signal arguments: string, less-than, negative
-  15. Check signal arguments: string, RE match, negative
-  16. Check signal arguments: string, substring (`contains`), positive
-  17. Check signal arguments: string, substring (`contains`), negative
+  15. Check signal arguments: string, RE not match
+  16. Check signal arguments: string, substring (`contains`)
+  17. Check signal arguments: string, no substring (`not contains`)
   18. Check signal arguments: list, subindex
   19. Check signal arguments: list, contains
   20. Check signal arguments: struct, subindex
   21. Check signal arguments: struct, contains
-  23. Check signal multiple arguments, check all, negative
-  24. Check signal multiple arguments, check any, positive
-  25. Check signal multiple arguments, check any, negative
 * Option for machine readable output
 
 

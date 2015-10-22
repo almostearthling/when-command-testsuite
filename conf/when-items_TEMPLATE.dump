@@ -148,7 +148,7 @@
       "task_name": "T08-stderr-chkSTR_taskOK",
       "task_id": 8,
       "type": "task",
-      "command": "[[BASE_DIR]]/taskcmd.sh",
+      "command": "[[BASE_DIR]]/taskcmd.sh -e",
       "include_env": true,
       "environment_vars": {},
       "startup_dir": "[[BASE_DIR]]",
@@ -586,6 +586,102 @@
       "no_skip": true,
       "event": "dbus_signal:SigHandler03-Test_is"
     },
+    {
+      "cond_name": "Cond41-DBus_is",
+      "cond_id": 41,
+      "type": "condition",
+      "subtype": "EventBasedCondition",
+      "exec_sequence": true,
+      "break_success": false,
+      "break_failure": false,
+      "repeat": false,
+      "suspended": false,
+      "task_names": [
+         "T07-stderr-rjcSTR_taskFAIL"
+      ],
+      "no_skip": true,
+      "event": "dbus_signal:SigHandler43-Test_is"
+    },
+    {
+      "cond_name": "Cond33-DBus_is",
+      "cond_id": 33,
+      "type": "condition",
+      "subtype": "EventBasedCondition",
+      "exec_sequence": true,
+      "break_success": false,
+      "break_failure": false,
+      "repeat": false,
+      "suspended": false,
+      "task_names": [
+         "T12-stdout-chkSTR_taskOK"
+      ],
+      "no_skip": true,
+      "event": "dbus_signal:SigHandler33-Test_is"
+    },
+    {
+      "cond_name": "Cond34-DBus_is",
+      "cond_id": 34,
+      "type": "condition",
+      "subtype": "EventBasedCondition",
+      "exec_sequence": true,
+      "break_success": false,
+      "break_failure": false,
+      "repeat": false,
+      "suspended": false,
+      "task_names": [
+         "T11-stdout-rjcSTR_taskFAIL"
+      ],
+      "no_skip": true,
+      "event": "dbus_signal:SigHandler34-Test_is"
+    },
+    {
+      "cond_name": "Cond35-DBus_is",
+      "cond_id": 35,
+      "type": "condition",
+      "subtype": "EventBasedCondition",
+      "exec_sequence": true,
+      "break_success": false,
+      "break_failure": false,
+      "repeat": false,
+      "suspended": false,
+      "task_names": [
+         "T10-stdout-chkRE_taskOK"
+      ],
+      "no_skip": true,
+      "event": "dbus_signal:SigHandler35-Test_is"
+    },
+    {
+      "cond_name": "Cond36-DBus_is",
+      "cond_id": 36,
+      "type": "condition",
+      "subtype": "EventBasedCondition",
+      "exec_sequence": true,
+      "break_success": false,
+      "break_failure": false,
+      "repeat": false,
+      "suspended": false,
+      "task_names": [
+         "T09-stdout-rjcRE_taskFAIL"
+      ],
+      "no_skip": true,
+      "event": "dbus_signal:SigHandler36-Test_is"
+    },
+    {
+      "cond_name": "Cond37-DBus_is",
+      "cond_id": 37,
+      "type": "condition",
+      "subtype": "EventBasedCondition",
+      "exec_sequence": true,
+      "break_success": false,
+      "break_failure": false,
+      "repeat": false,
+      "suspended": false,
+      "task_names": [
+         "T08-stderr-chkSTR_taskOK"
+      ],
+      "no_skip": true,
+      "event": "dbus_signal:SigHandler37-Test_is"
+    },
     // DBus based condition, test ok, not recurring, task succeeds
     {
       "cond_name": "Cond12-DBus_s",
@@ -602,6 +698,23 @@
       ],
       "no_skip": true,
       "event": "dbus_signal:SigHandler02-Test_s"
+    },
+    // DBus based condition, test KO, not recurring, no task
+    {
+      "cond_name": "Cond32-nDBus",
+      "cond_id": 32,
+      "type": "condition",
+      "subtype": "EventBasedCondition",
+      "exec_sequence": true,
+      "break_success": false,
+      "break_failure": false,
+      "repeat": false,
+      "suspended": false,
+      "task_names": [
+        "T01-status-chkOK_taskOK"
+      ],
+      "no_skip": true,
+      "event": "dbus_signal:SigHandler31-Test"
     }
   ],
 
@@ -615,7 +728,20 @@
       "interface": "it.jks.EventEmitter",
       "bus_path": "/it/jks/EventEmitter",
       "defer": false,
-      "signal": "PushSignal_s",
+      "signal": "PushSignal",
+      "param_checks": [
+      ],
+      "verify_all_checks": true
+    },
+    {
+      "type": "dbus_signal_handler",
+      "handler_name": "SigHandler31-Test",
+      "bus": "session",
+      "bus_name": "it.jks.EventEmitter",
+      "interface": "it.jks.EventEmitter",
+      "bus_path": "/it/jks/EventEmitter",
+      "defer": false,
+      "signal": "PushNoSignal",
       "param_checks": [
       ],
       "verify_all_checks": true
@@ -630,7 +756,21 @@
       "defer": false,
       "signal": "PushSignal_s",
       "param_checks": [
-        [ 0, null, "is", false, "BoZo"]
+        [ 0, null, "is", false, "BoZo" ]
+      ],
+      "verify_all_checks": true
+    },
+    {
+      "type": "dbus_signal_handler",
+      "handler_name": "SigHandler32-Test_s",
+      "bus": "session",
+      "bus_name": "it.jks.EventEmitter",
+      "interface": "it.jks.EventEmitter",
+      "bus_path": "/it/jks/EventEmitter",
+      "defer": false,
+      "signal": "PushSignal_s",
+      "param_checks": [
+        [ 0, null, "is", false, "BoZo" ]
       ],
       "verify_all_checks": true
     },
@@ -645,9 +785,99 @@
       "signal": "PushSignal_is",
       "param_checks": [
         [ 0, null, "is", false, 42],
-        [ 1, null, "matches", false, "B.*"]
+        [ 1, null, "matches", false, "B.*" ]
       ],
       "verify_all_checks": true
+    },
+    {
+      "type": "dbus_signal_handler",
+      "handler_name": "SigHandler33-Test_is",
+      "bus": "session",
+      "bus_name": "it.jks.EventEmitter",
+      "interface": "it.jks.EventEmitter",
+      "bus_path": "/it/jks/EventEmitter",
+      "defer": false,
+      "signal": "PushSignal_is",
+      "param_checks": [
+        [ 0, null, "is", true, 43],
+        [ 1, null, "is", true, "KoZo" ]
+      ],
+      "verify_all_checks": true
+    },
+    {
+      "type": "dbus_signal_handler",
+      "handler_name": "SigHandler34-Test_is",
+      "bus": "session",
+      "bus_name": "it.jks.EventEmitter",
+      "interface": "it.jks.EventEmitter",
+      "bus_path": "/it/jks/EventEmitter",
+      "defer": false,
+      "signal": "PushSignal_is",
+      "param_checks": [
+        [ 0, null, "lt", false, 43],
+        [ 1, null, "lt", false, "KoZo" ]
+      ],
+      "verify_all_checks": true
+    },
+    {
+      "type": "dbus_signal_handler",
+      "handler_name": "SigHandler35-Test_is",
+      "bus": "session",
+      "bus_name": "it.jks.EventEmitter",
+      "interface": "it.jks.EventEmitter",
+      "bus_path": "/it/jks/EventEmitter",
+      "defer": false,
+      "signal": "PushSignal_is",
+      "param_checks": [
+        [ 0, null, "lt", true, 41],
+        [ 1, null, "lt", true, "AnZo" ]
+      ],
+      "verify_all_checks": true
+    },
+    {
+      "type": "dbus_signal_handler",
+      "handler_name": "SigHandler36-Test_is",
+      "bus": "session",
+      "bus_name": "it.jks.EventEmitter",
+      "interface": "it.jks.EventEmitter",
+      "bus_path": "/it/jks/EventEmitter",
+      "defer": false,
+      "signal": "PushSignal_is",
+      "param_checks": [
+        [ 0, null, "gt", false, 41],
+        [ 1, null, "gt", false, "AnZo" ]
+      ],
+      "verify_all_checks": true
+    },
+    {
+      "type": "dbus_signal_handler",
+      "handler_name": "SigHandler37-Test_is",
+      "bus": "session",
+      "bus_name": "it.jks.EventEmitter",
+      "interface": "it.jks.EventEmitter",
+      "bus_path": "/it/jks/EventEmitter",
+      "defer": false,
+      "signal": "PushSignal_is",
+      "param_checks": [
+        [ 0, null, "gt", true, 42],
+        [ 1, null, "gt", true, "BoZo" ]
+      ],
+      "verify_all_checks": true
+    },
+    {
+      "type": "dbus_signal_handler",
+      "handler_name": "SigHandler43-Test_is",
+      "bus": "session",
+      "bus_name": "it.jks.EventEmitter",
+      "interface": "it.jks.EventEmitter",
+      "bus_path": "/it/jks/EventEmitter",
+      "defer": false,
+      "signal": "PushSignal_is",
+      "param_checks": [
+        [ 0, null, "is", false, 43],
+        [ 1, null, "matches", false, "B.*" ]
+      ],
+      "verify_all_checks": false
     }
   ]
 }

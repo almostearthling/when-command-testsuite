@@ -264,6 +264,27 @@
       "hour": [[TIMEOFDAY_HOUR]],
       "minute": [[TIMEOFDAY_MINUTE]]
     },
+    // Time based condition, suspended, not recurring, no task
+    {
+      "cond_name": "Cond21-Time",
+      "cond_id": 21,
+      "type": "condition",
+      "subtype": "TimeBasedCondition",
+      "exec_sequence": true,
+      "break_success": false,
+      "break_failure": false,
+      "repeat": false,
+      "suspended": true,
+      "task_names": [
+         "T01-status-chkOK_taskOK"
+      ],
+      "year": null,
+      "month": null,
+      "day": null,
+      "weekday": null,
+      "hour": [[TIMEOFDAY_HOUR]],
+      "minute": [[TIMEOFDAY_MINUTE]]
+    },
     // Interval based condition, not recurring, task fails
     {
       "cond_name": "Cond02-Interval",
@@ -280,6 +301,22 @@
       ],
       "interval": [[INTERVAL_TIME]]
     },
+    // Interval based condition, suspended, not recurring, no task
+    {
+      "cond_name": "Cond22-Interval",
+      "cond_id": 22,
+      "type": "condition",
+      "subtype": "IntervalBasedCondition",
+      "exec_sequence": true,
+      "break_success": false,
+      "break_failure": false,
+      "repeat": false,
+      "suspended": true,
+      "task_names": [
+         "T05-stderr-rjcRE_taskFAIL"
+      ],
+      "interval": [[INTERVAL_TIME]]
+    },
     // Idle time based condition, not recurring, task succeeds
     {
       "cond_name": "Cond03-Idle",
@@ -291,6 +328,22 @@
       "break_failure": false,
       "repeat": false,
       "suspended": false,
+      "task_names": [
+         "T03-status-chkFAIL_taskOK"
+      ],
+      "idle_secs": [[IDLE_TIME]]
+    },
+    // Idle time based condition, suspended, not recurring, no task
+    {
+      "cond_name": "Cond23-Idle",
+      "cond_id": 23,
+      "type": "condition",
+      "subtype": "IdleTimeBasedCondition",
+      "exec_sequence": true,
+      "break_success": false,
+      "break_failure": false,
+      "repeat": false,
+      "suspended": true,
       "task_names": [
          "T03-status-chkFAIL_taskOK"
       ],
@@ -682,7 +735,7 @@
       "no_skip": true,
       "event": "dbus_signal:SigHandler37-Test_is"
     },
-    // DBus based condition, test ok, not recurring, task succeeds
+    // DBus based condition, test ok, not recurring, task fails
     {
       "cond_name": "Cond12-DBus_s",
       "cond_id": 12,
@@ -698,6 +751,40 @@
       ],
       "no_skip": true,
       "event": "dbus_signal:SigHandler02-Test_s"
+    },
+    // Event based condition, startup, test ok, not recurring, task succeeds
+    {
+      "cond_name": "Cond13-Evt_startup",
+      "cond_id": 13,
+      "type": "condition",
+      "subtype": "EventBasedCondition",
+      "exec_sequence": true,
+      "break_success": false,
+      "break_failure": false,
+      "repeat": false,
+      "suspended": false,
+      "task_names": [
+         "T01-status-chkOK_taskOK"
+      ],
+      "no_skip": true,
+      "event": "startup"
+    },
+    // Event based condition, shutdown, test ok, not recurring, task succeeds
+    {
+      "cond_name": "Cond14-Evt_shutdown",
+      "cond_id": 14,
+      "type": "condition",
+      "subtype": "EventBasedCondition",
+      "exec_sequence": true,
+      "break_success": false,
+      "break_failure": false,
+      "repeat": false,
+      "suspended": false,
+      "task_names": [
+         "T01-status-chkOK_taskOK"
+      ],
+      "no_skip": true,
+      "event": "shutdown"
     },
     // DBus based condition, test KO, not recurring, no task
     {

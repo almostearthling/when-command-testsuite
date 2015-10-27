@@ -248,11 +248,16 @@ check_task_condition T11-stdout-rjcSTR_taskFAIL Cond34-DBus_is
 check_task_condition T10-stdout-chkRE_taskOK Cond35-DBus_is
 check_task_condition T09-stdout-rjcRE_taskFAIL Cond36-DBus_is
 check_task_condition T08-stderr-chkSTR_taskOK Cond37-DBus_is
+check_task_condition T01-status-chkOK_taskOK Cond13-Evt_startup
+check_task_condition T01-status-chkOK_taskOK Cond14-Evt_shutdown
 
 checkfail_task_condition T04-status-rjcFAIL_taskFAIL Cond74-Command_Status
 checkfail_task_condition T05-stderr-rjcRE_taskFAIL Cond75-Command_Stderr
 checkfail_task_condition T08-stderr-chkSTR_taskOK Cond76-Command_Stdout
 checkfail_task_condition T01-status-chkOK_taskOK Cond32-nDBus
+checkfail_task_condition T01-status-chkOK_taskOK Cond21-Time
+checkfail_task_condition T05-stderr-rjcRE_taskFAIL Cond22-Interval
+checkfail_task_condition T03-status-chkFAIL_taskOK Cond23-Idle
 
 # ... (more are to come)
 if [ "$errors" -gt "0" ]; then

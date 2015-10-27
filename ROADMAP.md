@@ -18,8 +18,13 @@ List of achievements and expectations for the When applet test suite.
   3. Check for *task* success or failure
 * Test *interval based conditions*
   1. Occurring
+  2. Not occurring
 * Test *time based conditions*
   1. Occurring
+  2. Not occurring
+* Test *idle time based conditions*
+  1. Occurring
+  2. Not occurring
 * Test *command based conditions*
   1. Check exit status, positive
   2. Check exit status, negative
@@ -31,9 +36,9 @@ List of achievements and expectations for the When applet test suite.
   8. Check stderr, positive substring
   9. Check stderr, positive match RE
   10. Check stderr, negative
-* Test *idle time based conditions*
-  1. Occurring
 * Test *event based conditions*
+  1. Startup
+  2. Shutdown
   13. Command line trigger
 * Test *file change based conditions*
   1. Occurring for a directory
@@ -63,15 +68,8 @@ List of achievements and expectations for the When applet test suite.
 ## 2) Goals for When 0.9.0-rc.1
 
 * Test *interval based conditions*
-  2. Not occurring
   3. Recurring
-* Test *time based conditions*
-  2. Not occurring
-* Test *idle time based conditions*
-  2. Not occurring
 * Test *event based conditions*
-  1. Startup
-  2. Shutdown
   3. Suspend [*emulated or optional*]
   4. Resume [*emulated or optional*]
   5. Connect storage [*emulated or optional*]

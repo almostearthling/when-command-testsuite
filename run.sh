@@ -79,6 +79,16 @@ checkfail_task_condition () {
   fi
 }
 
+checkrec_task_condition () {
+  local task=$1
+  local condition=$2
+  retval=`cat $SESSIONLOG | fgrep "task:" | fgrep "$task:$condition" | wc -l`
+  if [ "$retval" -lt "2" ]; then
+    errors=$(( $errors + 1 ))
+    failed="$failed $task:$condition"
+  fi
+}
+
 
 # banner
 echo "Welcome to the When test suite!"

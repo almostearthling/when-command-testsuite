@@ -36,17 +36,14 @@ class SignalEmitter(dbus.service.Object):
 
     @dbus.service.signal(UNIQUE_BUS_NAME, signature='')
     def PushSignal(self):           # no parameters
-        print("PushSignal")
         pass
 
     @dbus.service.signal(UNIQUE_BUS_NAME, signature='s')
     def PushSignal_s(self, s):      # single str parameter
-        print("PushSignal_s('%s')" % s)
         pass
 
     @dbus.service.signal(UNIQUE_BUS_NAME, signature='is')
     def PushSignal_is(self, i, s):  # int and str parameters
-        print("PushSignal_is(%s, '%s')" % (i, s))
         pass
 
 

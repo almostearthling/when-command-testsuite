@@ -19,6 +19,7 @@ List of achievements and expectations for the When applet test suite.
 * Test *interval based conditions*
   1. Occurring
   2. Not occurring
+  3. Recurring
 * Test *time based conditions*
   1. Occurring
   2. Not occurring
@@ -67,8 +68,6 @@ List of achievements and expectations for the When applet test suite.
 
 ## 2) Goals for When 0.9.0-rc.1
 
-* Test *interval based conditions*
-  3. Recurring
 * Test *event based conditions*
   3. Suspend [*emulated or optional*]
   4. Resume [*emulated or optional*]

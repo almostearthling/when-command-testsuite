@@ -301,6 +301,22 @@
       ],
       "interval": [[INTERVAL_TIME]]
     },
+    // Interval based condition, recurring, task succeeds
+    {
+      "cond_name": "Cond42-Interval",
+      "cond_id": 42,
+      "type": "condition",
+      "subtype": "IntervalBasedCondition",
+      "exec_sequence": true,
+      "break_success": false,
+      "break_failure": false,
+      "repeat": true,
+      "suspended": false,
+      "task_names": [
+         "T10-stdout-chkRE_taskOK"
+      ],
+      "interval": [[SHORT_INTERVAL_TIME]]
+    },
     // Interval based condition, suspended, not recurring, no task
     {
       "cond_name": "Cond22-Interval",

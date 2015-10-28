@@ -9,6 +9,7 @@ import time
 TIME_EVENT_AFTER_MINUTES = 2
 IDLE_TIME_MINUTES = 3
 INTERVAL_MINUTES = 5
+SHORT_INTERVAL_MINUTES = 2
 
 # directories
 BASE_DIR = os.path.dirname(sys.argv[0])
@@ -30,6 +31,7 @@ to_replace = {
     'TIMEOFDAY_MINUTE': time_event.tm_min,
     'IDLE_TIME': IDLE_TIME_MINUTES * 60,
     'INTERVAL_TIME': INTERVAL_MINUTES * 60,
+    'SHORT_INTERVAL_TIME': SHORT_INTERVAL_MINUTES * 60,
 }
 
 

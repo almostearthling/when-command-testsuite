@@ -303,7 +303,7 @@
     },
     // Interval based condition, recurring, task succeeds
     {
-      "cond_name": "Cond42-Interval",
+      "cond_name": "Cond42-Interval_Rec",
       "cond_id": 42,
       "type": "condition",
       "subtype": "IntervalBasedCondition",
@@ -768,6 +768,57 @@
       "no_skip": true,
       "event": "dbus_signal:SigHandler02-Test_s"
     },
+    // DBus based condition, test ok, not recurring, task fails
+    {
+      "cond_name": "Cond15-DBus_is",
+      "cond_id": 15,
+      "type": "condition",
+      "subtype": "EventBasedCondition",
+      "exec_sequence": true,
+      "break_success": false,
+      "break_failure": false,
+      "repeat": false,
+      "suspended": false,
+      "task_names": [
+         "T07-stderr-rjcSTR_taskFAIL"
+      ],
+      "no_skip": true,
+      "event": "dbus_signal:SigHandler44-Test_is"
+    },
+    // DBus based condition, test ok, not recurring, task succeeds
+    {
+      "cond_name": "Cond16-DBus_s",
+      "cond_id": 16,
+      "type": "condition",
+      "subtype": "EventBasedCondition",
+      "exec_sequence": true,
+      "break_success": false,
+      "break_failure": false,
+      "repeat": false,
+      "suspended": false,
+      "task_names": [
+         "T06-stderr-chkRE_taskOK"
+      ],
+      "no_skip": true,
+      "event": "dbus_signal:SigHandler45-Test_s"
+    },
+    // DBus based condition, test ok, not recurring, task fails
+    {
+      "cond_name": "Cond17-DBus_s",
+      "cond_id": 17,
+      "type": "condition",
+      "subtype": "EventBasedCondition",
+      "exec_sequence": true,
+      "break_success": false,
+      "break_failure": false,
+      "repeat": false,
+      "suspended": false,
+      "task_names": [
+         "T05-stderr-rjcRE_taskFAIL"
+      ],
+      "no_skip": true,
+      "event": "dbus_signal:SigHandler46-Test_s"
+    },
     // Event based condition, startup, test ok, not recurring, task succeeds
     {
       "cond_name": "Cond13-Evt_startup",
@@ -979,6 +1030,49 @@
       "param_checks": [
         [ 0, null, "is", false, 43],
         [ 1, null, "matches", false, "B.*" ]
+      ],
+      "verify_all_checks": false
+    },
+    {
+      "type": "dbus_signal_handler",
+      "handler_name": "SigHandler44-Test_is",
+      "bus": "session",
+      "bus_name": "it.jks.EventEmitter",
+      "interface": "it.jks.EventEmitter",
+      "bus_path": "/it/jks/EventEmitter",
+      "defer": false,
+      "signal": "PushSignal_is",
+      "param_checks": [
+        [ 0, null, "is", false, 43],
+        [ 1, null, "matches", true, "A.*" ]
+      ],
+      "verify_all_checks": false
+    },
+    {
+      "type": "dbus_signal_handler",
+      "handler_name": "SigHandler46-Test_s",
+      "bus": "session",
+      "bus_name": "it.jks.EventEmitter",
+      "interface": "it.jks.EventEmitter",
+      "bus_path": "/it/jks/EventEmitter",
+      "defer": false,
+      "signal": "PushSignal_s",
+      "param_checks": [
+        [ 0, null, "contains", true, "An" ]
+      ],
+      "verify_all_checks": false
+    },
+    {
+      "type": "dbus_signal_handler",
+      "handler_name": "SigHandler45-Test_s",
+      "bus": "session",
+      "bus_name": "it.jks.EventEmitter",
+      "interface": "it.jks.EventEmitter",
+      "bus_path": "/it/jks/EventEmitter",
+      "defer": false,
+      "signal": "PushSignal_s",
+      "param_checks": [
+        [ 0, null, "contains", false, "Zo" ]
       ],
       "verify_all_checks": false
     }

@@ -58,6 +58,9 @@ List of achievements and expectations for the When applet test suite.
   12. Check signal arguments: string, less-than
   13. Check signal arguments: string, not less-than
   14. Check signal arguments: string, RE match
+  15. Check signal arguments: string, RE not match
+  16. Check signal arguments: string, substring (`contains`)
+  17. Check signal arguments: string, no substring (`not contains`)
   22. Check signal multiple arguments, check all
   23. Check signal multiple arguments, check any
 * Easy to understand test visualization
@@ -84,9 +87,6 @@ List of achievements and expectations for the When applet test suite.
   3. Occurring for a single file
   4. Not occurring for a single file
 * Test *DBus custom event based conditions* (*NOTE:* Multiple number/string tests can be combined into a single *multiple arguments* test.)
-  15. Check signal arguments: string, RE not match
-  16. Check signal arguments: string, substring (`contains`)
-  17. Check signal arguments: string, no substring (`not contains`)
   18. Check signal arguments: list, subindex
   19. Check signal arguments: list, contains
   20. Check signal arguments: struct, subindex

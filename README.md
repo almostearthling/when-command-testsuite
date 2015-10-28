@@ -54,7 +54,7 @@ There are also some *conditions* that are hard to test automatically, that is th
 
 * conditions that arise when a device is plugged or unplugged
 * conditions that depend on joining or leaving a network
-* startup, shutdown, login and suspend based conditions.
+* suspend based conditions.
 
 The best way to test these conditions remains probably to interact with the applet and verify that certain events actually trigger certain tasks. Possibly in future versions of this test suite, the user will be asked to interact with the system, by enabling a network or plugging in a device.
 
@@ -80,3 +80,42 @@ After this **When** can be restarted using *Dash* or run at next login.
 The test suite only relies on the recorded output of commands used for *tasks* and in some cases by *conditions*: the **When** log files are not analyzed. However they remain a valuable source of information in case something goes wrong, that is why the test configuration includes debug logging. Logs are appended to the normal logs, the logging system in **When** does not allow to use different files or locations. During the tests **When** uses the color icon set: I normally let the applet guess the icon set, which in my case means that it uses light icons on dark background and I can visually identify the fact that the running one is a test session.
 
 Please note that, in order for *idle time based conditions* to occur properly, the testing session should be left alone without user interaction. For this reason the test script gives the user a grace time to unfocus a possible virtual desktop, so that the virtual machine can remain idle for the whole session letting the user do something else, such as checking the logs in a remote session.
+
+
+## Modifying the test suite
+
+The test suite can be update to add tests that were not considered at first: the possibilities of **When** are actually many, and it's virtually impossible to test really *every* single case. The files that should be modified when adding tests are the following:
+
+```
+<when_test_home>/run.sh
+<when_test_home>/prepare_items.py
+<when_test_home>/dbus_server.py
+<when_test_home>/conf/when-items_TEMPLATE.dump
+<when_test_home>/conf/when-command.conf
+```
+
+Probably `when-command.conf` and `prepare_items.py` are the least subject to changes in the bunch, and `dbus_server.py` should only be modified in order to emit more DBus signals. The other two should be edited whenever a new check is needed.
+
+### The items template
+
+The *items* template, that is `<when_test_home>/conf/when-items_TEMPLATE.dump`, can be modified to add conditions and therefore tasks to be run or not. It can be considered sort of an "augmented" JSON file, where some macros can be used and with comments. Comments are lines where the first non-space string is either `#` or `//`, and macros are all-caps strings surrounded by double brackets. To introduce a new test, my advice is to copy an existing condition and edit the entries accordingly. It might be a difficult operation, so please take a look at how the records are generated for the various parts in the applet code (the `Item_to_dict` functions) before modifying existing items: malformed item files will be rejected by the test instance and all the tests will fail.
+
+Comments are discarded in the generated file, and macros are substituted with fixed values as shown in `<when_test_home>/prepare_items.py`. It's strongly suggested to use predefined tasks in new conditions, in order to be sure that failing task names end with `_taskFAIL` and succeeding task names end with `_taskOK`: this allows to check task outcome automatically in a simple way.
+
+### The test launcher
+
+Whenever a condition is created and tasks are supposed to be triggered or not triggered, the `run.sh` laucher *must* be modified accordingly. After the `# *** CHECK TEST LOG FILE ***` line, there must be a check for each task triggered (or not triggered) by a condition. The check line has the following form:
+
+```
+check_type Task_Name Condition_Name
+```
+
+where `check_type` is one of the following:
+
+* `check_task_condition` when the condition is supposed to trigger a task
+* `checkfail_task_condition` when the condition is supposed *not* to trigger a task
+* `checkrec_task_condition` when the condition is supposed to trigger a recurring task.
+
+Please note that if a condition is bound to more than a task (either to be run in sequence or concurrently), for each task there should be a different check line.
+
+These are the only parts that should be modified in the launcher script, all other operations (such as verifying that the task outcome is the expected one, provided that tasks follow the naming scheme described above) are performed automatically.

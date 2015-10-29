@@ -43,6 +43,7 @@ List of achievements and expectations for the When applet test suite.
   13. Command line trigger
 * Test *file change based conditions*
   1. Occurring for a directory
+  2. Occurring for a single file
 * Test *DBus custom event based conditions*
   1. Check signal alone
   2. Check signal arguments: number, equality
@@ -82,10 +83,6 @@ List of achievements and expectations for the When applet test suite.
   10. Exit screensaver [*emulated or optional*]
   11. Session lock [*emulated or optional*]
   12. Session unlock [*emulated or optional*]
-* Test *file change based conditions*
-  2. Not occurring for a directory
-  3. Occurring for a single file
-  4. Not occurring for a single file
 * Test *DBus custom event based conditions* (*NOTE:* Multiple number/string tests can be combined into a single *multiple arguments* test.)
   18. Check signal arguments: list, subindex
   19. Check signal arguments: list, contains

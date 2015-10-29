@@ -638,6 +638,25 @@
         "[[BASE_DIR]]/temp"
       ]
     },
+    // Filenotify based condition, not recurring, task fails
+    {
+      "cond_name": "Cond20-FileNotify",
+      "cond_id": 20,
+      "type": "condition",
+      "subtype": "PathNotifyBasedCondition",
+      "exec_sequence": true,
+      "break_success": false,
+      "break_failure": false,
+      "repeat": false,
+      "suspended": false,
+      "task_names": [
+         "T02-status-rjcOK_taskFAIL"
+      ],
+      "no_skip": true,
+      "watched_paths": [
+        "[[BASE_DIR]]/temp/file_notify_test"
+      ]
+    },
     // DBus based condition, test ok, not recurring, task succeeds
     {
       "cond_name": "Cond11-DBus_is",

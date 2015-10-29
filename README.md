@@ -38,7 +38,7 @@ For the test suite to meaningfully function, the environment has to be specifica
 
 ### Configuration
 
-There is not much to be configured. However there are some parameters: the ones about times (`GRACE_TIME_MINUTES`, `SLEEP_TEST_MINUTES`, `SLEEP_DEFER_MINUTES`), for instance, can be modified. I tend to set them to something more than what is strictly needed, but not much more: it's safe to leave them alone. One parameter might need to be changed, that is the `WHEN_BASE` variable: if **When** was not installed in the usual `/opt/when-command` directory, it has to be set to the actual installation base directory.
+There is not much to be configured. However there are some parameters: the ones about times (`GRACE_TIME_MINUTES`, `SLEEP_TEST_MINUTES`, `SLEEP_DEFER_MINUTES`), for instance, can be modified. I tend to set them to something more than what is strictly needed, but not much more: it's safe to leave them alone. One parameter might need to be changed, that is the `WHEN_BASE` variable: if **When** was not installed in the usual `/opt/when-command` directory or if a different setup (eg. a repository clone) has to be used, it has to be set to the actual installation base directory.
 
 ### What Can be Tested
 
@@ -84,7 +84,7 @@ Please note that, in order for *idle time based conditions* to occur properly, t
 
 ## Modifying the test suite
 
-The test suite can be update to add tests that were not considered at first: the possibilities of **When** are actually many, and it's virtually impossible to test really *every* single case. The files that should be modified when adding tests are the following:
+The test suite can be update to add tests that were not considered at first: the possibilities of **When** are actually many, and it's virtually impossible to test really *every* single case -- although the suite tries to cover all areas and general features of the applet in terms of scheduling checks and running tasks. The files that can be modified when adding tests are the following:
 
 ```
 <when_test_home>/run.sh
@@ -100,21 +100,25 @@ Probably `when-command.conf` and `prepare_items.py` are the least subject to cha
 
 The *items* template, that is `<when_test_home>/conf/when-items_TEMPLATE.dump`, can be modified to add conditions and therefore tasks to be run or not. It can be considered sort of an "augmented" JSON file, where some macros can be used and with comments. Comments are lines where the first non-space string is either `#` or `//`, and macros are all-caps strings surrounded by double brackets. To introduce a new test, my advice is to copy an existing condition and edit the entries accordingly. It might be a difficult operation, so please take a look at how the records are generated for the various parts in the applet code (the `Item_to_dict` functions) before modifying existing items: malformed item files will be rejected by the test instance and all the tests will fail.
 
-Comments are discarded in the generated file, and macros are substituted with fixed values as shown in `<when_test_home>/prepare_items.py`. It's strongly suggested to use predefined tasks in new conditions, in order to be sure that failing task names end with `_taskFAIL` and succeeding task names end with `_taskOK`: this allows to check task outcome automatically in a simple way.
+Comments are discarded in the generated file, and macros are substituted with fixed values as shown in `<when_test_home>/prepare_items.py`. It's strongly suggested to use predefined tasks in new conditions, in order to be sure that failing task names end with `_taskFAIL` and succeeding task names end with `_taskOK`: this allows to check task outcome automatically in a simple way. Another reason for this is that the shell command used to testify task execution is the provided `taskcmd.sh`, which logs both the task name and the condition name, in a way that is easily recognizable by means of the provided verification functions in `run.sh`.
+
+Also, *command based conditions* should only use `test_fail.sh` and `test_succeed.sh` as check commands, possibly followed by switches to determine their behavior: the scripts are very easy and only accept one single switch to either exit with a success/failure status, and printing out a short or a long message.
 
 ### The test launcher
 
 Whenever a condition is created and tasks are supposed to be triggered or not triggered, the `run.sh` laucher *must* be modified accordingly. After the `# *** CHECK TEST LOG FILE ***` line, there must be a check for each task triggered (or not triggered) by a condition. The check line has the following form:
 
 ```
-check_type Task_Name Condition_Name
+check[rec|fail]_task_condition Task_Name Condition_Name
 ```
 
-where `check_type` is one of the following:
+where the first token is one of:
 
 * `check_task_condition` when the condition is supposed to trigger a task
 * `checkfail_task_condition` when the condition is supposed *not* to trigger a task
-* `checkrec_task_condition` when the condition is supposed to trigger a recurring task.
+* `checkrec_task_condition` when the condition is supposed to trigger a task more than once
+
+and `Task_Name` and `Condition_Name` are obviously the task and condition names as defined in the item template file.
 
 Please note that if a condition is bound to more than a task (either to be run in sequence or concurrently), for each task there should be a different check line.
 

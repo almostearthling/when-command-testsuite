@@ -246,6 +246,7 @@ check_task_condition T01-status-chkOK_taskOK Cond08-CommandLine
 check_task_condition T03-status-chkFAIL_taskOK Cond08-CommandLine
 check_task_condition T03-status-chkFAIL_taskOK Cond09-DBus
 check_task_condition T01-status-chkOK_taskOK Cond10-FileNotify
+check_task_condition T02-status-rjcOK_taskFAIL Cond20-FileNotify
 check_task_condition T06-stderr-chkRE_taskOK Cond11-DBus_is
 check_task_condition T05-stderr-rjcRE_taskFAIL Cond12-DBus_s
 check_task_condition T06-stderr-chkRE_taskOK Cond85-Command_Stderr

@@ -81,7 +81,7 @@ List of achievements and expectations for the When applet test suite.
 
 ## 3) Goals for When 1.0.0
 
-* Continuous Integration (optional)
+**All goals for When 1.0.0 have been reached**
 
 
 ## 4) Ongoing Actions
@@ -102,3 +102,4 @@ List of achievements and expectations for the When applet test suite.
   10. Exit screensaver [*emulated or optional*]
   11. Session lock [*emulated or optional*]
   12. Session unlock [*emulated or optional*]
+* Continuous Integration (optional)

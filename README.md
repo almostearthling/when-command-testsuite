@@ -2,9 +2,9 @@
 
 This is a test suite for the **When** scheduler. Since **When** is an interactive, single instance application, it's almost impossible to automate everything, although nowadays we are comfortable with simulated user interaction especially in web applications. In this case automation is made more difficult due to the fact that **When** is more similar to a system application. The test suite tries to exploit the most automation by using simple commands for tasks that log well-identifiable strings to a session log file, that can be interpreted using simple scripts.
 
-*Note:* For the moment this test suite is not much more than a proof-of-concept: of course tests are incomplete, but this set of scripts and templates should provide a skeleton to add checks for specific features. Now the suite shows especially its structure, but its components can be amended to improve both readability and effectiveness.
-
 ![Screenshot](https://raw.githubusercontent.com/almostearthling/when-command-testsuite/master/images/when-command-testsuite.jpg)
+
+The test suite is now quite complete, and embraces most use cases. Some use cases are left as optional (although desirable, if I find a way to automate them without user interaction) but the surrounding condition types are tested anyway: see the *What can be tested* paragraph below for details. Also, since a large number of conditions is set up and a fairly big amount of DBus signals are watched, this test suite can be interpreted as a way to stress test the applet: I didn't think of **When** as something that should check a lot of conditions, instead I thought of it as something that could perform five to ten tests, and that would defer the most intensive ones most of the times (once every minute by default). The test suite displays in this sense a quite unusual situation.
 
 
 ## Testing Process

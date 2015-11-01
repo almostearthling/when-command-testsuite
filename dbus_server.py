@@ -46,6 +46,14 @@ class SignalEmitter(dbus.service.Object):
     def PushSignal_is(self, i, s):  # int and str parameters
         pass
 
+    @dbus.service.signal(UNIQUE_BUS_NAME, signature='ia{si}')
+    def PushSignal_iDsi(self, i, s):  # int and dict{str:int}
+        pass
+
+    @dbus.service.signal(UNIQUE_BUS_NAME, signature='i(si)')
+    def PushSignal_iSsi(self, i, s):  # int and struct(str, int)
+        pass
+
 
 def thread_target():
     while not os.path.exists(wait_file):
@@ -55,6 +63,10 @@ def thread_target():
     emitter.PushSignal_s("BoZo")
     time.sleep(LONG_WAIT_DELTA)
     emitter.PushSignal_is(42, "BoZo")
+    time.sleep(LONG_WAIT_DELTA)
+    emitter.PushSignal_iSsi(3, ("BoZo", 42))
+    time.sleep(LONG_WAIT_DELTA)
+    emitter.PushSignal_iDsi(3, {"BoZo": 42, "AnZo": 43})
     time.sleep(LONG_WAIT_DELTA)
     while os.path.exists(wait_file):
         time.sleep(WAIT_DELTA)

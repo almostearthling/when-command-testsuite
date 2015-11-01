@@ -838,6 +838,74 @@
       "no_skip": true,
       "event": "dbus_signal:SigHandler46-Test_s"
     },
+    // DBus based condition, test ok, not recurring, task ok
+    {
+      "cond_name": "Cond25-DBus_iSsi",
+      "cond_id": 25,
+      "type": "condition",
+      "subtype": "EventBasedCondition",
+      "exec_sequence": true,
+      "break_success": false,
+      "break_failure": false,
+      "repeat": false,
+      "suspended": false,
+      "task_names": [
+         "T01-status-chkOK_taskOK"
+      ],
+      "no_skip": true,
+      "event": "dbus_signal:SigHandler47-Test_iSsi"
+    },
+    // DBus based condition, test ok, not recurring, task fails
+    {
+      "cond_name": "Cond26-DBus_iSsi",
+      "cond_id": 26,
+      "type": "condition",
+      "subtype": "EventBasedCondition",
+      "exec_sequence": true,
+      "break_success": false,
+      "break_failure": false,
+      "repeat": false,
+      "suspended": false,
+      "task_names": [
+         "T02-status-rjcOK_taskFAIL"
+      ],
+      "no_skip": true,
+      "event": "dbus_signal:SigHandler49-Test_iSsi"
+    },
+    // DBus based condition, test ok, not recurring, task ok
+    {
+      "cond_name": "Cond27-DBus_iDsi",
+      "cond_id": 27,
+      "type": "condition",
+      "subtype": "EventBasedCondition",
+      "exec_sequence": true,
+      "break_success": false,
+      "break_failure": false,
+      "repeat": false,
+      "suspended": false,
+      "task_names": [
+         "T03-status-chkFAIL_taskOK"
+      ],
+      "no_skip": true,
+      "event": "dbus_signal:SigHandler48-Test_iDsi"
+    },
+    // DBus based condition, test ok, not recurring, task fails
+    {
+      "cond_name": "Cond28-DBus_iDsi",
+      "cond_id": 28,
+      "type": "condition",
+      "subtype": "EventBasedCondition",
+      "exec_sequence": true,
+      "break_success": false,
+      "break_failure": false,
+      "repeat": false,
+      "suspended": false,
+      "task_names": [
+         "T04-status-rjcFAIL_taskFAIL"
+      ],
+      "no_skip": true,
+      "event": "dbus_signal:SigHandler42-Test_iDsi"
+    },
     // Event based condition, startup, test ok, not recurring, task succeeds
     {
       "cond_name": "Cond13-Evt_startup",
@@ -1092,6 +1160,62 @@
       "signal": "PushSignal_s",
       "param_checks": [
         [ 0, null, "contains", false, "Zo" ]
+      ],
+      "verify_all_checks": false
+    },
+    {
+      "type": "dbus_signal_handler",
+      "handler_name": "SigHandler47-Test_iSsi",
+      "bus": "session",
+      "bus_name": "it.jks.EventEmitter",
+      "interface": "it.jks.EventEmitter",
+      "bus_path": "/it/jks/EventEmitter",
+      "defer": false,
+      "signal": "PushSignal_s",
+      "param_checks": [
+        [ 1, null, "contains", false, 42 ]
+      ],
+      "verify_all_checks": false
+    },
+    {
+      "type": "dbus_signal_handler",
+      "handler_name": "SigHandler49-Test_iSsi",
+      "bus": "session",
+      "bus_name": "it.jks.EventEmitter",
+      "interface": "it.jks.EventEmitter",
+      "bus_path": "/it/jks/EventEmitter",
+      "defer": false,
+      "signal": "PushSignal_s",
+      "param_checks": [
+        [ 1, 1, "is", false, 42 ]
+      ],
+      "verify_all_checks": false
+    },
+    {
+      "type": "dbus_signal_handler",
+      "handler_name": "SigHandler48-Test_iDsi",
+      "bus": "session",
+      "bus_name": "it.jks.EventEmitter",
+      "interface": "it.jks.EventEmitter",
+      "bus_path": "/it/jks/EventEmitter",
+      "defer": false,
+      "signal": "PushSignal_s",
+      "param_checks": [
+        [ 1, null, "contains", false, 43 ]
+      ],
+      "verify_all_checks": false
+    },
+    {
+      "type": "dbus_signal_handler",
+      "handler_name": "SigHandler42-Test_iDsi",
+      "bus": "session",
+      "bus_name": "it.jks.EventEmitter",
+      "interface": "it.jks.EventEmitter",
+      "bus_path": "/it/jks/EventEmitter",
+      "defer": false,
+      "signal": "PushSignal_s",
+      "param_checks": [
+        [ 1, "AnZo", "is", false, 43 ]
       ],
       "verify_all_checks": false
     }

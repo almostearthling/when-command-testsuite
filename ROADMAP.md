@@ -62,6 +62,10 @@ List of achievements and expectations for the When applet test suite.
   15. Check signal arguments: string, RE not match
   16. Check signal arguments: string, substring (`contains`)
   17. Check signal arguments: string, no substring (`not contains`)
+  18. Check signal arguments: list, subindex
+  19. Check signal arguments: list, contains
+  20. Check signal arguments: struct, subindex
+  21. Check signal arguments: struct, contains
   22. Check signal multiple arguments, check all
   23. Check signal multiple arguments, check any
 * Easy to understand test visualization
@@ -83,11 +87,6 @@ List of achievements and expectations for the When applet test suite.
   10. Exit screensaver [*emulated or optional*]
   11. Session lock [*emulated or optional*]
   12. Session unlock [*emulated or optional*]
-* Test *DBus custom event based conditions* (*NOTE:* Multiple number/string tests can be combined into a single *multiple arguments* test.)
-  18. Check signal arguments: list, subindex
-  19. Check signal arguments: list, contains
-  20. Check signal arguments: struct, subindex
-  21. Check signal arguments: struct, contains
 * Option for machine readable output
 
 

@@ -264,6 +264,10 @@ check_task_condition T01-status-chkOK_taskOK Cond14-Evt_shutdown
 check_task_condition T07-stderr-rjcSTR_taskFAIL Cond15-DBus_is
 check_task_condition T06-stderr-chkRE_taskOK Cond16-DBus_s
 check_task_condition T05-stderr-rjcRE_taskFAIL Cond17-DBus_s
+check_task_condition T01-status-chkOK_taskOK Cond25-DBus_iSsi
+check_task_condition T02-status-rjcOK_taskFAIL Cond26-DBus_iSsi
+check_task_condition T03-status-chkFAIL_taskOK Cond27-DBus_iDsi
+check_task_condition T04-status-rjcFAIL_taskFAIL Cond28-DBus_iDsi
 
 checkfail_task_condition T04-status-rjcFAIL_taskFAIL Cond74-Command_Status
 checkfail_task_condition T05-stderr-rjcRE_taskFAIL Cond75-Command_Stderr

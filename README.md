@@ -4,7 +4,7 @@ This is a test suite for the **When** scheduler. Since **When** is an interactiv
 
 ![Screenshot](https://raw.githubusercontent.com/almostearthling/when-command-testsuite/master/images/when-command-testsuite.jpg)
 
-The test suite is now quite complete, and embraces most use cases. Some use cases are left as optional (although desirable, if I find a way to automate them without user interaction) but the surrounding condition types are tested anyway: see the *What can be tested* paragraph below for details. Also, since a large number of conditions is set up and a fairly big amount of DBus signals are watched, this test suite can be interpreted as a way to stress test the applet: I didn't think of **When** as something that should check a lot of conditions, instead I thought of it as something that could perform five to ten tests, and that would defer the most intensive ones most of the times (once every minute by default). The test suite displays in this sense a quite unusual situation.
+The test suite is now quite complete, and covers most use cases. Some of them are left as optional (although desirable, if I ever find a way to automate them without user interaction) but the surrounding condition types are tested anyway: see the *What can be tested* paragraph below for details. Also, since a large number of conditions is set up and a fairly big amount of DBus signals are watched, this test suite can be interpreted as a way to stress test the applet: I didn't think of **When** as something that should check a lot of conditions, instead I thought of it as something that could perform five to ten tests, and that would defer the most intensive ones most of the times (once every minute by default). The test suite displays in this sense a quite unusual situation.
 
 
 ## Testing Process
@@ -84,7 +84,7 @@ Please note that, in order for *idle time based conditions* to occur properly, t
 
 ## Modifying the test suite
 
-The test suite can be update to add tests that were not considered at first: the possibilities of **When** are actually many, and it's virtually impossible to test really *every* single case -- although the suite tries to cover all areas and general features of the applet in terms of scheduling checks and running tasks. The files that can be modified when adding tests are the following:
+The test suite can be updated to add tests that were not considered at first: the possibilities of **When** are actually many, and it's virtually impossible to test really *every* single case -- although the suite tries to cover all areas and general features of the applet in terms of scheduling checks and running tasks. The files that can be modified when adding tests are the following:
 
 ```
 <when_test_home>/run.sh

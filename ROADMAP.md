@@ -76,17 +76,6 @@ List of achievements and expectations for the When applet test suite.
 
 ## 2) Goals for When 0.9.0-rc.1
 
-* Test *event based conditions*
-  3. Suspend [*emulated or optional*]
-  4. Resume [*emulated or optional*]
-  5. Connect storage [*emulated or optional*]
-  6. Disconnect storage [*emulated or optional*]
-  7. Join network [*emulated or optional*]
-  8. Leave network [*emulated or optional*]
-  9. Start screensaver [*emulated or optional*]
-  10. Exit screensaver [*emulated or optional*]
-  11. Session lock [*emulated or optional*]
-  12. Session unlock [*emulated or optional*]
 * Option for machine readable output
 
 
@@ -98,3 +87,18 @@ List of achievements and expectations for the When applet test suite.
 ## 4) Ongoing Actions
 
 * Verify test correctness
+
+
+## 5) Optional and desirable features
+
+* Test *event based conditions*
+  3. Suspend [*emulated or optional*]
+  4. Resume [*emulated or optional*]
+  5. Connect storage [*emulated or optional*]
+  6. Disconnect storage [*emulated or optional*]
+  7. Join network [*emulated or optional*]
+  8. Leave network [*emulated or optional*]
+  9. Start screensaver [*emulated or optional*]
+  10. Exit screensaver [*emulated or optional*]
+  11. Session lock [*emulated or optional*]
+  12. Session unlock [*emulated or optional*]

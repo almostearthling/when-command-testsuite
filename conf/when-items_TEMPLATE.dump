@@ -1171,7 +1171,7 @@
       "interface": "it.jks.EventEmitter",
       "bus_path": "/it/jks/EventEmitter",
       "defer": false,
-      "signal": "PushSignal_s",
+      "signal": "PushSignal_iSsi",
       "param_checks": [
         [ 1, null, "contains", false, 42 ]
       ],
@@ -1185,7 +1185,7 @@
       "interface": "it.jks.EventEmitter",
       "bus_path": "/it/jks/EventEmitter",
       "defer": false,
-      "signal": "PushSignal_s",
+      "signal": "PushSignal_iSsi",
       "param_checks": [
         [ 1, 1, "is", false, 42 ]
       ],
@@ -1199,7 +1199,7 @@
       "interface": "it.jks.EventEmitter",
       "bus_path": "/it/jks/EventEmitter",
       "defer": false,
-      "signal": "PushSignal_s",
+      "signal": "PushSignal_iDsi",
       "param_checks": [
         [ 1, null, "contains", false, 43 ]
       ],
@@ -1213,7 +1213,7 @@
       "interface": "it.jks.EventEmitter",
       "bus_path": "/it/jks/EventEmitter",
       "defer": false,
-      "signal": "PushSignal_s",
+      "signal": "PushSignal_iDsi",
       "param_checks": [
         [ 1, "AnZo", "is", false, 43 ]
       ],

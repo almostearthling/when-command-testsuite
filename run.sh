@@ -94,18 +94,18 @@ checkrec_task_condition () {
 BRIEF=
 QUIET=
 case $1 in
-  -b|--brief)
+  -b)
     BRIEF="true"
     QUIET="true"
     ;;
-  -q|--quiet)
+  -q)
     QUIET="true"
     ;;
 esac
 
 
 # banner
-if [ -n "$QUIET" ]; then
+if [ -z "$QUIET" ]; then
   echo "Welcome to the When test suite!"
   echo "Please do not interact with the console or the desktop, unless this"
   echo "script instructs to do so: please refer to README.md for details. If"
@@ -115,7 +115,7 @@ if [ -n "$QUIET" ]; then
 fi
 
 # verify that When is installed, and if not bail out
-if [ -n "$QUIET" ]; then
+if [ -z "$QUIET" ]; then
   echo_prompt "Verifying When installation... "
   if [ -d $CONF_BASE -a -f $CONF_BASE/when-command.conf ]; then
     echo_ok
@@ -124,14 +124,16 @@ if [ -n "$QUIET" ]; then
     exit_fail
   fi
 else
-  if [ -n "$BRIEF" ]; then
-    echo_err "FAIL:NO_WHEN"
+  if [ ! -d $CONF_BASE -o ! -f $CONF_BASE/when-command.conf ]; then
+    if [ -n "$BRIEF" ]; then
+      echo_err "FAIL:NO_WHEN"
+    fi
+    exit 1
   fi
-  exit 1
 fi
 
 # prepare directories and files
-if [ -n "$QUIET" ]; then
+if [ -z "$QUIET" ]; then
   echo_prompt "Preparing files."
 fi
 discard_out chmod a+x $BASE/*.sh
@@ -156,12 +158,12 @@ fi
 if [ ! -d "$BASE/temp" ]; then
   discard_out mkdir $BASE/temp
 fi
-if [ -n "$QUIET" ]; then
+if [ -z "$QUIET" ]; then
   echo_ok
 fi
 
 # save config, test whether or not When is running, and possibly shut it down
-if [ -n "$QUIET" ]; then
+if [ -z "$QUIET" ]; then
   echo_prompt "Shut down When and save configuration."
 fi
 if discard_out $WHEN --query ; then
@@ -174,7 +176,7 @@ if [ -f $CONF_BASE/when-command.pause ]; then
 fi
 $WHEN --export $BASE/save/when-items-saved.dump
 res=$?
-if [ -n "$QUIET" ]; then
+if [ -z "$QUIET" ]; then
   if [ "$res" = "0" ]; then
     echo_ok
   else
@@ -190,7 +192,7 @@ else
 fi
 
 # prepare new configuration and install it
-if [ -n "$QUIET" ]; then
+if [ -z "$QUIET" ]; then
   echo_prompt "Install test configuration."
 fi
 discard_out $WHEN --clear
@@ -198,7 +200,7 @@ discard_out cp $BASE/conf/when-command.conf $CONF_BASE
 discard_out python3 prepare_items.py
 discard_out $WHEN --import $BASE/conf/when-items.dump
 res=$?
-if [ -n "$QUIET" ]; then
+if [ -z "$QUIET" ]; then
   if [ "$res" = "0" ]; then
     echo_ok
   else
@@ -214,16 +216,16 @@ else
 fi
 
 # start the DBus signal emitter
-if [ -n "$QUIET" ]; then
+if [ -z "$QUIET" ]; then
   echo_prompt "Starting DBus signal emitter."
 fi
 nohup python3 $BASE/dbus_server.py > /dev/null 2>&1 &
-if [ -n "$QUIET" ]; then
+if [ -z "$QUIET" ]; then
   echo_ok
 fi
 
 # wait for user to take the cursor off the screen in a VM
-if [ -n "$QUIET" ]; then
+if [ -z "$QUIET" ]; then
   echo_prompt_nl "Waiting $GRACE_TIME_MINUTES minute(s) to start the test instance..."
   sleep_minutes_progress $GRACE_TIME_MINUTES
   echo_prompt "Done."
@@ -233,12 +235,12 @@ else
 fi
 
 # launch the new instance of When in a separate process
-if [ -n "$QUIET" ]; then
+if [ -z "$QUIET" ]; then
   echo_prompt "Starting test instance of When."
 fi
 nohup $WHEN > /dev/null 2>&1 &
 res=$?
-if [ -n "$QUIET" ]; then
+if [ -z "$QUIET" ]; then
   if [ "$res" = "0" ]; then
     echo_ok
   else
@@ -254,7 +256,7 @@ else
 fi
 
 # for now sleep some time
-if [ -n "$QUIET" ]; then
+if [ -z "$QUIET" ]; then
   echo_prompt_nl "Sleeping $SLEEP_TEST_MINUTES minute(s) during unattended tests... "
   sleep_minutes_progress $SLEEP_TEST_MINUTES
   echo_prompt "Done."
@@ -264,18 +266,18 @@ else
 fi
 
 # perform interactive-like tests
-if [ -n "$QUIET" ]; then
+if [ -z "$QUIET" ]; then
   echo_prompt "Performing other automated tests."
 fi
 discard_out $WHEN --run-condition Cond08-CommandLine    # 1. cmdline-activated
 discard_out touch $BASE/temp/file_notify_test           # 2. inotify
 discard_out touch $BASE/temp/start_dbus.tmp             # 3. emit signals
 # ...
-if [ -n "$QUIET" ]; then
+if [ -z "$QUIET" ]; then
   echo_ok
 fi
 
-if [ -n "$QUIET" ]; then
+if [ -z "$QUIET" ]; then
   echo_prompt_nl "Sleeping $SLEEP_DEFER_MINUTES minute(s) for deferred tasks... "
   sleep_minutes_progress $SLEEP_DEFER_MINUTES
   echo_prompt "Done."
@@ -286,23 +288,25 @@ fi
 
 
 # export task history to a text file
-echo_prompt "Export task history to log directory..."
+if [ -z "$QUIET" ]; then
+  echo_prompt "Export task history to log directory..."
+fi
 discard_out $WHEN --export-history $BASE/log/when-task-history.csv
 sleep 1
-if [ -n "$QUIET" ]; then
+if [ -z "$QUIET" ]; then
   echo_ok
 fi
 
 
 # shut down current instance
-if [ -n "$QUIET" ]; then
+if [ -z "$QUIET" ]; then
   echo_prompt "Shutting down test instance of When..."
 fi
 if discard_out $WHEN --query ; then
   discard_out $WHEN --shutdown
 fi
 res=$?
-if [ -n "$QUIET" ]; then
+if [ -z "$QUIET" ]; then
   if [ "$res" = "0" ]; then
     echo_ok
   else
@@ -318,18 +322,18 @@ else
 fi
 
 # ask DBus server to shut down asap
-if [ -n "$QUIET" ]; then
+if [ -z "$QUIET" ]; then
   echo_prompt "Shutting down DBus signal emitter..."
 fi
 discard_out rm $BASE/temp/start_dbus.tmp
 sleep 5
-if [ -n "$QUIET" ]; then
+if [ -z "$QUIET" ]; then
   echo_ok
 fi
 
 
 # *** CHECK TEST LOG FILE ***
-if [ -n "$QUIET" ]; then
+if [ -z "$QUIET" ]; then
   echo_prompt "Performing tests on log file."
 fi
 # do checks on log
@@ -381,7 +385,7 @@ checkfail_task_condition T03-status-chkFAIL_taskOK Cond23-Idle
 checkrec_task_condition T10-stdout-chkRE_taskOK Cond42-Interval_Rec
 
 # ... (more are to come)
-if [ -n "$QUIET" ]; then
+if [ -z "$QUIET" ]; then
   if [ "$errors" -gt "0" ]; then
     echo_fail
   else
@@ -390,7 +394,7 @@ if [ -n "$QUIET" ]; then
 fi
 
 # *** CHECK TEST TASKS OUTCOME ***
-if [ -n "$QUIET" ]; then
+if [ -z "$QUIET" ]; then
   echo_prompt "Performing tests on task history file..."
 fi
 # do checks on history
@@ -421,7 +425,7 @@ for x in `grep -v ^ITEM_ID $BASE/log/when-task-history.csv | sed "s/ /_/g"` ; do
   esac
 done
 
-if [ -n "$QUIET" ]; then
+if [ -z "$QUIET" ]; then
   if [ "$task_errors" -gt "0" ]; then
     echo_fail
   else
@@ -432,7 +436,7 @@ fi
 # *** END OF TESTS
 
 # restore old When configuration
-if [ -n "$QUIET" ]; then
+if [ -z "$QUIET" ]; then
   echo_prompt "Restoring configuration."
 fi
 discard_out $WHEN --clear
@@ -442,7 +446,7 @@ fi
 discard_out cp $BASE/save/when-command.conf $CONF_BASE
 discard_out $WHEN --import $BASE/save/when-items-saved.dump
 res=$?
-if [ -n "$QUIET" ]; then
+if [ -z "$QUIET" ]; then
   if [ "$res" = "0" ]; then
     echo_ok
   else
@@ -458,15 +462,15 @@ else
 fi
 
 # clean up temporary files
-if [ -n "$QUIET" ]; then
+if [ -z "$QUIET" ]; then
   echo_prompt "Cleaning up."
 fi
 discard_out rm $BASE/temp/*
-if [ -n "$QUIET" ]; then
+if [ -z "$QUIET" ]; then
   echo_ok
 fi
 
-if [ -n "$QUIET" ]; then
+if [ -z "$QUIET" ]; then
   echo
   if [ "$errors" = "0" -a "$task_errors" = "0" ]; then
     echo "All tests succeeded! This release of When can be almost safely shipped."
@@ -502,6 +506,10 @@ else
       fi
     fi
     exit 1
+  else
+    if [ -n "$BRIEF" ]; then
+      echo_err "SUCCESS"
+    fi
   fi
 fi
 

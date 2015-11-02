@@ -72,11 +72,13 @@ List of achievements and expectations for the When applet test suite.
 * Fancy output
 * Progress bars for lengthy operations
 * Documentation (`README.md`)
+* Option for machine readable output plus exit status
+* Option for no output, just exit status
 
 
 ## 2) Goals for When 0.9.0-rc.1
 
-* Option for machine readable output
+**All goals for When 0.9.0-rc.1 have been reached**
 
 
 ## 3) Goals for When 1.0.0

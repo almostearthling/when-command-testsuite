@@ -4,12 +4,12 @@ This is a test suite for the **When** scheduler. Since **When** is an interactiv
 
 ![Screenshot](https://raw.githubusercontent.com/almostearthling/when-command-testsuite/master/images/when-command-testsuite.jpg)
 
-The test suite is now quite complete, and covers most use cases. Some of them are left as optional (although desirable, if I ever find a way to automate them without user interaction) but the surrounding condition types are tested anyway: see the *What can be tested* paragraph below for details. Also, since a large number of conditions is set up and a fairly big amount of DBus signals are watched, this test suite can be interpreted as a way to stress test the applet: I didn't think of **When** as something that should check a lot of conditions, instead I thought of it as something that could perform five to ten tests, and that would defer the most intensive ones most of the times (once every minute by default). The test suite displays in this sense a quite unusual situation.
+The test suite is now quite complete, and covers most use cases. Some of them are left as optional (although desirable, if I ever find a way to automate them without user interaction) but the surrounding condition types are tested anyway: see the *What can be tested* paragraph below for details. Also, since a large number of conditions is set up and a fairly big amount of DBus signals are watched, this test suite can be interpreted as a way to stress test the applet: I didn't think of **When** as something that should check a lot of conditions, instead I thought of it as a small utility that could perform five to ten tests, and that would defer the most intensive ones most of the times (once every minute by default). The test suite displays in this sense a quite unusual situation.
 
 
 ## Testing Process
 
-To perform the test, the `run.sh` command must be executed at the shell prompt. This will perform the following tasks:
+To perform the test, the `run.sh` command must be executed at the shell prompt. This will do the following:
 
 * verify whether or not **When** is running, and in this case shut it down
 * create an appropriate *items* dump file (tasks, conditions, signal handlers) from a template
@@ -80,6 +80,20 @@ After this **When** can be restarted using *Dash* or run at next login.
 The test suite only relies on the recorded output of commands used for *tasks* and in some cases by *conditions*: the **When** log files are not analyzed. However they remain a valuable source of information in case something goes wrong, that is why the test configuration includes debug logging. Logs are appended to the normal logs, the logging system in **When** does not allow to use different files or locations. During the tests **When** uses the color icon set: I normally let the applet guess the icon set, which in my case means that it uses light icons on dark background and I can visually identify the fact that the running one is a test session.
 
 Please note that, in order for *idle time based conditions* to occur properly, the testing session should be left alone without user interaction. For this reason the test script gives the user a grace time to unfocus a possible virtual desktop, so that the virtual machine can remain idle for the whole session letting the user do something else, such as checking the logs in a remote session.
+
+Normally, if `run.sh` is launched from the command line with no arguments, it produces textual output to assist the user in determining what the test suite is doing at the moment. This includes simple descriptions of the ongoing operations, check marks (and other special characters) to show success or failure, and text-based progress bars when the script is waiting for **When** to do something in the background. This can be annoying, or even just useless, at least in two cases:
+
+* when the test script is performed (possibly on "headless" machines or virtual machines) as part of a continuous integration system;
+* when a script has to be used to verify the outcome of the test suite.
+
+Two command-line switches have been provided for this purpose:
+
+* `-b` just issues a *brief* output in case of failure, consisting of the word `FAIL` followed by a colon and an all-caps word describing the reason (`NO_WHEN` when the applet is not found, `NO_DUMP` and `NO_IMPORT` if there is trouble with the items file, and so on), or the word `ERR` followed by either `COND` or `TASK` and the name of the item that failed. In case of success it just displays the word `SUCCESS`. All output is written to *stderr*, and in case of failure the exit status is `1`;
+* `-q` produces no output, the only way to check for outcome is to test the return value (`1` on failure, `0` on success).
+
+The options cannot be combined, and either one must be the first and only argument to the `run.sh` script if present. Neither option prevents the green **When** icon to show on the top panel: if you don't want to show it for some reason, please modify the `<when_test_home>/conf/when-command.conf` file.
+
+*NOTE:*  There is *no way* to run the test suite from a text session (or a remote terminal), even when `-b` or `-q` are set. It has to be launched from a terminal window in a graphical session in order to be able to launch an instance of **When** for testing purposes.
 
 
 ## Modifying the test suite

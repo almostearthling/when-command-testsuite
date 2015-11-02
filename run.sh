@@ -90,25 +90,50 @@ checkrec_task_condition () {
 }
 
 
+# variables for brief (machine readable) output or no-output at all
+BRIEF=
+QUIET=
+case $1 in
+  -b|--brief)
+    BRIEF="true"
+    QUIET="true"
+    ;;
+  -q|--quiet)
+    QUIET="true"
+    ;;
+esac
+
+
 # banner
-echo "Welcome to the When test suite!"
-echo "Please do not interact with the console or the desktop, unless this"
-echo "script instructs to do so: please refer to README.md for details. If"
-echo "the script is interrupted before end, you might need to restore both"
-echo "configuration and exported items stored in the 'save' subdirectory."
-echo
+if [ -n "$QUIET" ]; then
+  echo "Welcome to the When test suite!"
+  echo "Please do not interact with the console or the desktop, unless this"
+  echo "script instructs to do so: please refer to README.md for details. If"
+  echo "the script is interrupted before end, you might need to restore both"
+  echo "configuration and exported items stored in the 'save' subdirectory."
+  echo
+fi
 
 # verify that When is installed, and if not bail out
-echo_prompt "Verifying When installation... "
-if [ -d $CONF_BASE -a -f $CONF_BASE/when-command.conf ]; then
-  echo_ok
+if [ -n "$QUIET" ]; then
+  echo_prompt "Verifying When installation... "
+  if [ -d $CONF_BASE -a -f $CONF_BASE/when-command.conf ]; then
+    echo_ok
+  else
+    echo "not installed: please install it and run tests."
+    exit_fail
+  fi
 else
-  echo "not installed: please install it and run tests."
-  exit_fail
+  if [ -n "$BRIEF" ]; then
+    echo_err "FAIL:NO_WHEN"
+  fi
+  exit 1
 fi
 
 # prepare directories and files
-echo_prompt "Preparing files."
+if [ -n "$QUIET" ]; then
+  echo_prompt "Preparing files."
+fi
 discard_out chmod a+x $BASE/*.sh
 discard_out chmod a+x $BASE/*.py
 if [ -d "$BASE/log" ]; then
@@ -131,15 +156,14 @@ fi
 if [ ! -d "$BASE/temp" ]; then
   discard_out mkdir $BASE/temp
 fi
-echo_ok
-
-# prepare shell environment
-echo_prompt "Preparing environment."
-discard_out . $BASE/preamble.sh
-echo_ok
+if [ -n "$QUIET" ]; then
+  echo_ok
+fi
 
 # save config, test whether or not When is running, and possibly shut it down
-echo_prompt "Shut down When and save configuration."
+if [ -n "$QUIET" ]; then
+  echo_prompt "Shut down When and save configuration."
+fi
 if discard_out $WHEN --query ; then
   discard_out $WHEN --shutdown
   sleep 5
@@ -149,88 +173,165 @@ if [ -f $CONF_BASE/when-command.pause ]; then
   discard_out mv $CONF_BASE/when-command.pause $BASE/save
 fi
 $WHEN --export $BASE/save/when-items-saved.dump
-[ "$?" = "0" ] && echo_ok || echo_fail
+res=$?
+if [ -n "$QUIET" ]; then
+  if [ "$res" = "0" ]; then
+    echo_ok
+  else
+    exit_fail
+  fi
+else
+  if [ "$res" != "0" ]; then
+    if [ -n "$BRIEF" ]; then
+      echo_err "FAIL:NO_DUMP"
+    fi
+    exit 1
+  fi
+fi
 
 # prepare new configuration and install it
-echo_prompt "Install test configuration."
+if [ -n "$QUIET" ]; then
+  echo_prompt "Install test configuration."
+fi
 discard_out $WHEN --clear
 discard_out cp $BASE/conf/when-command.conf $CONF_BASE
 discard_out python3 prepare_items.py
 discard_out $WHEN --import $BASE/conf/when-items.dump
-if [ "$?" = "0" ]; then
-  echo_ok
+res=$?
+if [ -n "$QUIET" ]; then
+  if [ "$res" = "0" ]; then
+    echo_ok
+  else
+    exit_fail
+  fi
 else
-  exit_fail
+  if [ "$res" != "0" ]; then
+    if [ -n "$BRIEF" ]; then
+      echo_err "FAIL:NO_IMPORT"
+    fi
+    exit 1
+  fi
 fi
 
 # start the DBus signal emitter
-echo_prompt "Starting DBus signal emitter."
+if [ -n "$QUIET" ]; then
+  echo_prompt "Starting DBus signal emitter."
+fi
 nohup python3 $BASE/dbus_server.py > /dev/null 2>&1 &
-echo_ok
+if [ -n "$QUIET" ]; then
+  echo_ok
+fi
 
 # wait for user to take the cursor off the screen in a VM
-echo_prompt_nl "Waiting $GRACE_TIME_MINUTES minute(s) to start the test instance..."
-sleep_minutes_progress $GRACE_TIME_MINUTES
-echo_prompt "Done."
-echo_ok
-
-# launch the new instance of When in a separate process
-echo_prompt "Starting test instance of When."
-nohup $WHEN > /dev/null 2>&1 &
-if [ "$?" = "0" ]; then
+if [ -n "$QUIET" ]; then
+  echo_prompt_nl "Waiting $GRACE_TIME_MINUTES minute(s) to start the test instance..."
+  sleep_minutes_progress $GRACE_TIME_MINUTES
+  echo_prompt "Done."
   echo_ok
 else
-  exit_fail
+  sleep $(( $GRACE_TIME_MINUTES * 60 ))
+fi
+
+# launch the new instance of When in a separate process
+if [ -n "$QUIET" ]; then
+  echo_prompt "Starting test instance of When."
+fi
+nohup $WHEN > /dev/null 2>&1 &
+res=$?
+if [ -n "$QUIET" ]; then
+  if [ "$res" = "0" ]; then
+    echo_ok
+  else
+    exit_fail
+  fi
+else
+  if [ "$res" != "0" ]; then
+    if [ -n "$BRIEF" ]; then
+      echo_err "FAIL:START_WHEN"
+    fi
+    exit 1
+  fi
 fi
 
 # for now sleep some time
-echo_prompt_nl "Sleeping $SLEEP_TEST_MINUTES minute(s) during unattended tests... "
-sleep_minutes_progress $SLEEP_TEST_MINUTES
-echo_prompt "Done."
-echo_ok
+if [ -n "$QUIET" ]; then
+  echo_prompt_nl "Sleeping $SLEEP_TEST_MINUTES minute(s) during unattended tests... "
+  sleep_minutes_progress $SLEEP_TEST_MINUTES
+  echo_prompt "Done."
+  echo_ok
+else
+  sleep $(( $SLEEP_TEST_MINUTES * 60 ))
+fi
 
 # perform interactive-like tests
-echo_prompt "Performing other automated tests."
+if [ -n "$QUIET" ]; then
+  echo_prompt "Performing other automated tests."
+fi
 discard_out $WHEN --run-condition Cond08-CommandLine    # 1. cmdline-activated
 discard_out touch $BASE/temp/file_notify_test           # 2. inotify
 discard_out touch $BASE/temp/start_dbus.tmp             # 3. emit signals
 # ...
-echo_ok
+if [ -n "$QUIET" ]; then
+  echo_ok
+fi
 
-echo_prompt_nl "Sleeping $SLEEP_DEFER_MINUTES minute(s) for deferred tasks... "
-sleep_minutes_progress $SLEEP_DEFER_MINUTES
-echo_prompt "Done."
-echo_ok
+if [ -n "$QUIET" ]; then
+  echo_prompt_nl "Sleeping $SLEEP_DEFER_MINUTES minute(s) for deferred tasks... "
+  sleep_minutes_progress $SLEEP_DEFER_MINUTES
+  echo_prompt "Done."
+  echo_ok
+else
+  sleep $(( $SLEEP_DEFER_MINUTES * 60 ))
+fi
 
 
 # export task history to a text file
 echo_prompt "Export task history to log directory..."
 discard_out $WHEN --export-history $BASE/log/when-task-history.csv
 sleep 1
-echo_ok
+if [ -n "$QUIET" ]; then
+  echo_ok
+fi
 
 
 # shut down current instance
-echo_prompt "Shutting down test instance of When..."
+if [ -n "$QUIET" ]; then
+  echo_prompt "Shutting down test instance of When..."
+fi
 if discard_out $WHEN --query ; then
   discard_out $WHEN --shutdown
 fi
-if [ "$?" = "0" ]; then
-  sleep 5
-  echo_ok
+res=$?
+if [ -n "$QUIET" ]; then
+  if [ "$res" = "0" ]; then
+    echo_ok
+  else
+    exit_fail
+  fi
 else
-  exit_fail
+  if [ "$res" != "0" ]; then
+    if [ -n "$BRIEF" ]; then
+      echo_err "FAIL:START_WHEN"
+    fi
+    exit 1
+  fi
 fi
 
 # ask DBus server to shut down asap
-echo_prompt "Shutting down DBus signal emitter..."
+if [ -n "$QUIET" ]; then
+  echo_prompt "Shutting down DBus signal emitter..."
+fi
 discard_out rm $BASE/temp/start_dbus.tmp
 sleep 5
-echo_ok
+if [ -n "$QUIET" ]; then
+  echo_ok
+fi
 
 
 # *** CHECK TEST LOG FILE ***
-echo_prompt "Performing tests on log file."
+if [ -n "$QUIET" ]; then
+  echo_prompt "Performing tests on log file."
+fi
 # do checks on log
 errors=0
 failed=""
@@ -280,14 +381,18 @@ checkfail_task_condition T03-status-chkFAIL_taskOK Cond23-Idle
 checkrec_task_condition T10-stdout-chkRE_taskOK Cond42-Interval_Rec
 
 # ... (more are to come)
-if [ "$errors" -gt "0" ]; then
-  echo_fail
-else
-  echo_ok
+if [ -n "$QUIET" ]; then
+  if [ "$errors" -gt "0" ]; then
+    echo_fail
+  else
+    echo_ok
+  fi
 fi
 
 # *** CHECK TEST TASKS OUTCOME ***
-echo_prompt "Performing tests on task history file..."
+if [ -n "$QUIET" ]; then
+  echo_prompt "Performing tests on task history file..."
+fi
 # do checks on history
 task_errors=0
 task_failed=""
@@ -316,52 +421,88 @@ for x in `grep -v ^ITEM_ID $BASE/log/when-task-history.csv | sed "s/ /_/g"` ; do
   esac
 done
 
-if [ "$task_errors" -gt "0" ]; then
-  echo_fail
-else
-  echo_ok
+if [ -n "$QUIET" ]; then
+  if [ "$task_errors" -gt "0" ]; then
+    echo_fail
+  else
+    echo_ok
+  fi
 fi
 
 # *** END OF TESTS
 
 # restore old When configuration
-echo_prompt "Restoring configuration."
+if [ -n "$QUIET" ]; then
+  echo_prompt "Restoring configuration."
+fi
 discard_out $WHEN --clear
 if [ -f $BASE/save/when-command.pause ]; then
   discard_out mv $BASE/save/when-command.pause $CONF_BASE
 fi
 discard_out cp $BASE/save/when-command.conf $CONF_BASE
 discard_out $WHEN --import $BASE/save/when-items-saved.dump
-if [ "$?" = "0" ]; then
-  echo_ok
+res=$?
+if [ -n "$QUIET" ]; then
+  if [ "$res" = "0" ]; then
+    echo_ok
+  else
+    exit_fail
+  fi
 else
-  echo_fail
+  if [ "$res" != "0" ]; then
+    if [ -n "$BRIEF" ]; then
+      echo_err "FAIL:START_WHEN"
+    fi
+    exit 1
+  fi
 fi
 
 # clean up temporary files
-echo_prompt "Cleaning up."
+if [ -n "$QUIET" ]; then
+  echo_prompt "Cleaning up."
+fi
 discard_out rm $BASE/temp/*
-echo_ok
+if [ -n "$QUIET" ]; then
+  echo_ok
+fi
 
-echo
-if [ "$errors" = "0" -a "$task_errors" = "0" ]; then
-  echo "All tests succeeded! This release of When can be almost safely shipped."
-else
-  if [ "$errors" -gt "0" ]; then
-    echo "There are $errors failed tests:"
-    for x in $failed; do
-      echo -e "\xE2\x80\xA2 $x"
-    done
-  fi
-  if [ "$task_errors" -gt "0" ]; then
-    echo "There are $task_errors unexpected task results:"
-    for x in $task_failed; do
-      echo -e "\xE2\x80\xA2 $x"
-    done
-  fi
+if [ -n "$QUIET" ]; then
   echo
-  echo "This release of When has to be reviewed before shipping."
-  exit 2
+  if [ "$errors" = "0" -a "$task_errors" = "0" ]; then
+    echo "All tests succeeded! This release of When can be almost safely shipped."
+  else
+    if [ "$errors" -gt "0" ]; then
+      echo "There are $errors failed tests:"
+      for x in $failed; do
+        echo_bullet $x
+      done
+    fi
+    if [ "$task_errors" -gt "0" ]; then
+      echo "There are $task_errors unexpected task results:"
+      for x in $task_failed; do
+        echo_bullet $x
+      done
+    fi
+    echo
+    echo "This release of When has to be reviewed before shipping."
+    exit 1
+  fi
+else
+  if [ "$errors" != "0" -o "$task_errors" != "0" ]; then
+    if [ -n "$BRIEF" ]; then
+      if [ "$errors" -gt "0" ]; then
+        for x in $failed; do
+          echo_err "ERR:COND:$x"
+        done
+      fi
+      if [ "$task_errors" -gt "0" ]; then
+        for x in $task_failed; do
+          echo_err "ERR:TASK:$x"
+        done
+      fi
+    fi
+    exit 1
+  fi
 fi
 
 # end.

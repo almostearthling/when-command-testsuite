@@ -17,6 +17,10 @@ echo_prompt_nl () {
   echo -e "\e[33m[`date +%H:%M:%S`]\e[0m" "$@"
 }
 
+echo_bullet () {
+  echo -e "\xE2\x80\xA2" "$@"
+}
+
 echo_fail () {
   echo -e " \e[31m\xE2\x9C\x96\e[0m"
 }

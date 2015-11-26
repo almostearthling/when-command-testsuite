@@ -38,7 +38,7 @@ For the test suite to meaningfully function, the environment has to be specifica
 
 ### Configuration
 
-There is not much to be configured. However there are some parameters: the ones about times (`GRACE_TIME_MINUTES`, `SLEEP_TEST_MINUTES`, `SLEEP_DEFER_MINUTES`), for instance, can be modified. I tend to set them to something more than what is strictly needed, but not much more: it's safe to leave them alone. One parameter might need to be changed, that is the `WHEN_BASE` variable: if **When** was not installed in the usual `/opt/when-command` directory or if a different setup (eg. a repository clone) has to be used, it has to be set to the actual installation base directory.
+There is not much to be configured. However there are some parameters: the ones about times (`GRACE_TIME_MINUTES`, `SLEEP_TEST_MINUTES`, `SLEEP_DEFER_MINUTES`), for instance, can be modified. I tend to set them to something more than what is strictly needed, but not much more: it's safe to leave them alone. One parameter might need to be changed, that is the `WHEN_BASE` variable: if **When** was not installed in the usual `/opt/when-command` directory or if a different setup (e.g. a repository clone) has to be used, it has to be set to the actual installation base directory.
 
 ### What Can be Tested
 

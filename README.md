@@ -34,11 +34,11 @@ Before running `run.sh`, all shell scripts should be made executable: do a `chmo
 
 ### Requirements
 
-For the test suite to meaningfully function, the environment has to be specifically prepared: this means for example that all the dependencies (`xprintidle` and also the optional `python3-pyinotify`) must be installed. Also, **When** must be installed and configured for the user that will perform the test, that is `<INSTALLDIR>/when-command --install` should have been run at the time of testing. The tests must be performed from a terminal window in a graphic environment, right on the machine where **When** is tested, thus it cannot be run in a remote (e.g. `ssh`) session. This is because **When** is a desktop application anyway, and the test instance must belong to a Gnome session desktop.
+For the test suite to meaningfully function, the environment has to be specifically prepared: this means for example that all the dependencies (`xprintidle` and also the optional `python3-pyinotify`) must be installed. Also, **When** must be installed and configured for the user that will perform the test, that is `when-command --install` should have been run at the time of testing. The tests must be performed from a terminal window in a graphic environment, right on the machine where **When** is tested, thus it cannot be run in a remote (e.g. `ssh`) session. This is because **When** is a desktop application anyway, and the test instance must belong to a Gnome session desktop.
 
 ### Configuration
 
-There is not much to be configured. However there are some parameters: the ones about times (`GRACE_TIME_MINUTES`, `SLEEP_TEST_MINUTES`, `SLEEP_DEFER_MINUTES`), for instance, can be modified. I tend to set them to something more than what is strictly needed, but not much more: it's safe to leave them alone. One parameter might need to be changed, that is the `WHEN_BASE` variable: if **When** was not installed in the usual `/opt/when-command` directory or if a different setup (e.g. a repository clone) has to be used, it has to be set to the actual installation base directory.
+There is not much to be configured. However there are some parameters: the ones about times (`GRACE_TIME_MINUTES`, `SLEEP_TEST_MINUTES`, `SLEEP_DEFER_MINUTES`), for instance, can be modified. I tend to set them to something more than what is strictly needed, but not much more: it's safe to leave them alone. One parameter might need to be changed, that is the `WHEN_BASE` variable: if **When** was not installed using the preferred package (LSB based) or if a different setup (e.g. a repository clone) has to be used, it has to be set to the actual installation base directory. There are two commented out options in `run.sh`: one is for the `/opt` based installation and the other for a setup contained in `~/Applications/When` such as the one described in the [documentation](https://github.com/almostearthling/when-command/blob/master/README.md#installation-from-a-source-archive-or-a-repository-clone). If one of these methods was chosen, it's sufficient to uncomment the appropriate script line.
 
 ### What Can be Tested
 
@@ -66,10 +66,10 @@ Hopefully nothing goes wrong and the test suite reaches the final part of the `r
 
 ```
 ~$ cd <when_test_home>
-~/<when_test_home>$ /opt/when-command/when-command --kill
-~/<when_test_home>$ /opt/when-command/when-command --clear --reset
+~/<when_test_home>$ when-command --kill
+~/<when_test_home>$ when-command --clear --reset
 ~/<when_test_home>$ cp save/when-command.conf $HOME/.config/when-command
-~/<when_test_home>$ /opt/when-command/when-command --import save/when-items-saved.dump
+~/<when_test_home>$ when-command --import save/when-items-saved.dump
 ```
 
 After this **When** can be restarted using *Dash* or run at next login.

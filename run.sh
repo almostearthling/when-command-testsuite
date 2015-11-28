@@ -14,7 +14,9 @@ export SLEEP_TEST_MINUTES=5   # time for unattended tests
 export SLEEP_DEFER_MINUTES=2  # time for deferred tasks to take place
 
 export BASE=`dirname $0`
-export WHEN_BASE=/opt/when-command
+export WHEN_BASE=/usr/bin
+# export WHEN_BASE=/opt/when-command
+# export WHEN_BASE=$HOME/Applications/When
 
 export CONF_BASE=$HOME/.config/when-command
 export WHEN="$WHEN_BASE/when-command"

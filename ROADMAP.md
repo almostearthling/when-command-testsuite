@@ -104,4 +104,7 @@ List of achievements and expectations for the When applet test suite.
   10. Exit screensaver [*emulated or optional*]
   11. Session lock [*emulated or optional*]
   12. Session unlock [*emulated or optional*]
+  13. Battery Charging [*emulated or optional*]
+  14. Battery Discharging [*emulated or optional*]
+  15. Battery Low [*emulated or optional*]
 * Continuous Integration (optional)

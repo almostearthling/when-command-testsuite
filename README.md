@@ -38,7 +38,7 @@ For the test suite to meaningfully function, the environment has to be specifica
 
 ### Configuration
 
-There is not much to be configured. However there are some parameters: the ones about times (`GRACE_TIME_MINUTES`, `SLEEP_TEST_MINUTES`, `SLEEP_DEFER_MINUTES`), for instance, can be modified. I tend to set them to something more than what is strictly needed, but not much more: it's safe to leave them alone. One parameter might need to be changed, that is the `WHEN_BASE` variable: if **When** was not installed using the preferred package (LSB based) or if a different setup (e.g. a repository clone) has to be used, it has to be set to the actual installation base directory. There are two commented out options in `run.sh`: one is for the `/opt` based installation and the other for a setup contained in `~/Applications/When` such as the one described in the [documentation](https://github.com/almostearthling/when-command/blob/master/README.md#installation-from-a-source-archive-or-a-repository-clone). If one of these methods was chosen, it's sufficient to uncomment the appropriate script line.
+There is not much to be configured. However there are some parameters: the ones about times (`GRACE_TIME_MINUTES`, `SLEEP_TEST_MINUTES`, `SLEEP_DEFER_MINUTES`), for instance, can be modified. I tend to set them to something more than what is strictly needed, but not much more: it's safe to leave them alone. One parameter might need to be changed, that is the `WHEN_BASE` variable: if **When** was not installed using the preferred package (LSB based) or if a different setup (e.g. a repository clone) has to be used, it has to be set to the actual installation base directory. There are two commented out options in `run.sh`: one is for the `/opt` based installation and the other for a setup contained in `~/Applications/When` such as the one described in the [documentation](http://when-documentation.readthedocs.org/en/latest/install.html#install-from-the-source). If one of these methods was chosen, it's sufficient to uncomment the appropriate script line.
 
 ### What Can be Tested
 
@@ -58,7 +58,7 @@ There are also some *conditions* that are hard to test automatically, that is th
 
 The best way to test these conditions remains probably to interact with the applet and verify that certain events actually trigger certain tasks. Possibly in future versions of this test suite, the user will be asked to interact with the system, by enabling a network or plugging in a device.
 
-Also, the *Note* in **When**'s `README.md` file, *Conditions* paragraph, should be taken into account: conditions that trigger the same task at very close times should be avoided, because in case of two conditions triggering the same task at the same time only one of them will actually result bound to it.
+Also, the *Note* in **When**'s documentation file [overview](http://when-documentation.readthedocs.org/en/latest/description.html#overview), should be taken into account: conditions occur at very close times should be avoided, because in case of two events at the same time only one of them will actually be enqueued for task execution.
 
 ### How to Recover
 

@@ -70,6 +70,6 @@ object path: /it/jks/EventEmitter
 interface: it.jks.EventEmitter
 signal: PushSignal_is
 parameters:
-    2, equal, AnZo
+    1, equal, AnZo
 
 # end.

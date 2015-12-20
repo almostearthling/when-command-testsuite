@@ -271,7 +271,7 @@ fi
 if [ -z "$QUIET" ]; then
   echo_prompt "Loading items from valid Item Definition File..."
 fi
-sed "s%xxBASE_DIRxx%`pwd`%g" $BASE/conf/itemdefs.when | $WHEN --item-add -
+sed "s%xxBASE_DIRxx%`pwd`%g" $BASE/conf/itemdefs.when | discard_out $WHEN --item-add -
 res=$?
 if [ -z "$QUIET" ]; then
   if [ "$res" = "0" ]; then
@@ -290,11 +290,11 @@ fi
 if [ -z "$QUIET" ]; then
   echo_prompt "Discarding items from invalid Item Definition Files..."
 fi
-$WHEN --item-add $BASE/conf/itemdefs-fail01.when
+discard_out $WHEN --item-add $BASE/conf/itemdefs-fail01.when
 res1=$?
-$WHEN --item-add $BASE/conf/itemdefs-fail02.when
+discard_out $WHEN --item-add $BASE/conf/itemdefs-fail02.when
 res2=$?
-$WHEN --item-add $BASE/conf/itemdefs-fail03.when
+discard_out $WHEN --item-add $BASE/conf/itemdefs-fail03.when
 res3=$?
 if [ -z "$QUIET" ]; then
   if [ "$res1" != "0" -a "$res2" != "0" -a "$res3" != "0" ]; then
@@ -309,6 +309,9 @@ else
     fi
   fi
 fi
+
+# small pause to ensure that item definition file has been loaded
+sleep 15
 
 # perform interactive-like tests
 if [ -z "$QUIET" ]; then

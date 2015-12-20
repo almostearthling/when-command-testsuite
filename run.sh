@@ -420,6 +420,13 @@ check_task_condition T02-status-rjcOK_taskFAIL Cond26-DBus_iSsi
 check_task_condition T03-status-chkFAIL_taskOK Cond27-DBus_iDsi
 check_task_condition T04-status-rjcFAIL_taskFAIL Cond28-DBus_iDsi
 
+check_task_condition Task-IDF02_taskFAIL Cond_IDF01-Interval
+check_task_condition Task-IDF02_taskFAIL Cond_IDF03-Command
+check_task_condition Task-IDF01_taskOK Cond_IDF04-Idle
+check_task_condition Task-IDF01_taskOK Cond_IDF05-Event
+check_task_condition Task-IDF01_taskOK Cond_IDF06-FileChanges
+check_task_condition Task-IDF01_taskOK Cond_IDF07-UserEvent
+
 checkfail_task_condition T04-status-rjcFAIL_taskFAIL Cond74-Command_Status
 checkfail_task_condition T05-stderr-rjcRE_taskFAIL Cond75-Command_Stderr
 checkfail_task_condition T08-stderr-chkSTR_taskOK Cond76-Command_Stdout
@@ -427,6 +434,9 @@ checkfail_task_condition T01-status-chkOK_taskOK Cond32-nDBus
 checkfail_task_condition T01-status-chkOK_taskOK Cond21-Time
 checkfail_task_condition T05-stderr-rjcRE_taskFAIL Cond22-Interval
 checkfail_task_condition T03-status-chkFAIL_taskOK Cond23-Idle
+
+checkfail_task_condition Task-IDF01_taskOK Cond_IDF01-Interval
+checkfail_task_condition Task-IDF01_taskOK Cond_IDF02-Time
 
 checkrec_task_condition T10-stdout-chkRE_taskOK Cond42-Interval_Rec
 

@@ -11,7 +11,7 @@
 
 export GRACE_TIME_MINUTES=1   # grace time to take cursor off VM desktop
 export SLEEP_TEST_MINUTES=5   # time for unattended tests
-export SLEEP_DEFER_MINUTES=3  # time for deferred tasks to take place
+export SLEEP_DEFER_MINUTES=2  # time for deferred tasks to take place
 
 export BASE=`dirname $0`
 export WHEN_BASE=/usr/bin
@@ -311,14 +311,21 @@ else
 fi
 
 # small pause to ensure that item definition file has been loaded
-sleep 15
+if [ -z "$QUIET" ]; then
+  echo_prompt_nl "Sleeping $GRACE_TIME_MINUTES minute(s) to wait for new items... "
+  sleep_minutes_progress $GRACE_TIME_MINUTES
+  echo_prompt "Done."
+  echo_ok
+else
+  sleep $(( $GRACE_TIME_MINUTES * 60 ))
+fi
 
 # perform interactive-like tests
 if [ -z "$QUIET" ]; then
   echo_prompt "Performing other automated tests."
 fi
 discard_out $WHEN --run-condition Cond08-CommandLine    # 1a. cmdline-activated
-discard_out $WHEN --run-condition Cond_IDF07-UserEvent  # 1b. cmdline-activated
+discard_out $WHEN --run-condition Cond_IDF05-Event      # 1b. cmdline-activated
 discard_out touch $BASE/temp/file_notify_test           # 2. inotify
 discard_out touch $BASE/temp/start_dbus.tmp             # 3. emit signals
 # ...

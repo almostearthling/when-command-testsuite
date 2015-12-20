@@ -11,7 +11,7 @@
 
 export GRACE_TIME_MINUTES=1   # grace time to take cursor off VM desktop
 export SLEEP_TEST_MINUTES=5   # time for unattended tests
-export SLEEP_DEFER_MINUTES=2  # time for deferred tasks to take place
+export SLEEP_DEFER_MINUTES=3  # time for deferred tasks to take place
 
 export BASE=`dirname $0`
 export WHEN_BASE=/usr/bin

@@ -267,11 +267,65 @@ else
   sleep $(( $SLEEP_TEST_MINUTES * 60 ))
 fi
 
+# load items from item definition files
+if [ -z "$QUIET" ]; then
+  echo_prompt "Loading items from valid Item Definition File..."
+fi
+sed "s%xxBASE_DIRxx%`pwd`%g" $BASE/conf/itemdefs.when | discard_out $WHEN --item-add -
+res=$?
+if [ -z "$QUIET" ]; then
+  if [ "$res" = "0" ]; then
+    echo_ok
+  else
+    echo_fail
+  fi
+else
+  if [ "$res" != "0" ]; then
+    if [ -n "$BRIEF" ]; then
+      echo_err "FAIL:LOAD_VALID_IDF"
+    fi
+  fi
+fi
+
+if [ -z "$QUIET" ]; then
+  echo_prompt "Discarding items from invalid Item Definition Files..."
+fi
+discard_out $WHEN --item-add $BASE/conf/itemdefs-fail01.when
+res1=$?
+discard_out $WHEN --item-add $BASE/conf/itemdefs-fail02.when
+res2=$?
+discard_out $WHEN --item-add $BASE/conf/itemdefs-fail03.when
+res3=$?
+if [ -z "$QUIET" ]; then
+  if [ "$res1" != "0" -a "$res2" != "0" -a "$res3" != "0" ]; then
+    echo_ok
+  else
+    echo_fail
+  fi
+else
+  if [ "$res1" != "0" -a "$res2" != "0" -a "$res3" != "0" ]; then
+    if [ -n "$BRIEF" ]; then
+      echo_err "FAIL:LOAD_INVALID_IDF"
+    fi
+  fi
+fi
+
+# small pause to ensure that item definition file has been loaded
+if [ -z "$QUIET" ]; then
+  echo_prompt_nl "Sleeping $GRACE_TIME_MINUTES minute(s) to wait for new items... "
+  sleep_minutes_progress $GRACE_TIME_MINUTES
+  echo_prompt "Done."
+  echo_ok
+else
+  sleep $(( $GRACE_TIME_MINUTES * 60 ))
+fi
+
 # perform interactive-like tests
 if [ -z "$QUIET" ]; then
   echo_prompt "Performing other automated tests."
 fi
-discard_out $WHEN --run-condition Cond08-CommandLine    # 1. cmdline-activated
+discard_out $WHEN --run-condition Cond08-CommandLine    # 1a. cmdline-activated
+discard_out $WHEN --run-condition Cond_IDF05-Event      # 1b. cmdline-activated
 discard_out touch $BASE/temp/file_notify_test           # 2. inotify
 discard_out touch $BASE/temp/start_dbus.tmp             # 3. emit signals
 # ...
@@ -376,6 +430,13 @@ check_task_condition T02-status-rjcOK_taskFAIL Cond26-DBus_iSsi
 check_task_condition T03-status-chkFAIL_taskOK Cond27-DBus_iDsi
 check_task_condition T04-status-rjcFAIL_taskFAIL Cond28-DBus_iDsi
 
+check_task_condition Task-IDF02_taskFAIL Cond_IDF01-Interval
+check_task_condition Task-IDF02_taskFAIL Cond_IDF03-Command
+check_task_condition Task-IDF01_taskOK Cond_IDF04-Idle
+check_task_condition Task-IDF01_taskOK Cond_IDF05-Event
+check_task_condition Task-IDF01_taskOK Cond_IDF06-FileChanges
+check_task_condition Task-IDF01_taskOK Cond_IDF07-UserEvent
+
 checkfail_task_condition T04-status-rjcFAIL_taskFAIL Cond74-Command_Status
 checkfail_task_condition T05-stderr-rjcRE_taskFAIL Cond75-Command_Stderr
 checkfail_task_condition T08-stderr-chkSTR_taskOK Cond76-Command_Stdout
@@ -383,6 +444,9 @@ checkfail_task_condition T01-status-chkOK_taskOK Cond32-nDBus
 checkfail_task_condition T01-status-chkOK_taskOK Cond21-Time
 checkfail_task_condition T05-stderr-rjcRE_taskFAIL Cond22-Interval
 checkfail_task_condition T03-status-chkFAIL_taskOK Cond23-Idle
+
+checkfail_task_condition Task-IDF01_taskOK Cond_IDF01-Interval
+checkfail_task_condition Task-IDF01_taskOK Cond_IDF02-Time
 
 checkrec_task_condition T10-stdout-chkRE_taskOK Cond42-Interval_Rec
 

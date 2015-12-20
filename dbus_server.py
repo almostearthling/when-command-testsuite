@@ -68,6 +68,8 @@ def thread_target():
     time.sleep(LONG_WAIT_DELTA)
     emitter.PushSignal_iDsi(3, {"BoZo": 42, "AnZo": 43})
     time.sleep(LONG_WAIT_DELTA)
+    emitter.PushSignal_is(13, "AnZo")
+    time.sleep(LONG_WAIT_DELTA)
     while os.path.exists(wait_file):
         time.sleep(WAIT_DELTA)
     main_loop.quit()

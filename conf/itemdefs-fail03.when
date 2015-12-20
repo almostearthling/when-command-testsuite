@@ -1,0 +1,8 @@
+# This definition file will fail to load because it is malformed
+
+[TaskFail02]
+type: task
+command: true
+check for: funny, status, 0
+
+# end.

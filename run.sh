@@ -267,11 +267,55 @@ else
   sleep $(( $SLEEP_TEST_MINUTES * 60 ))
 fi
 
+# load items from item definition files
+if [ -z "$QUIET" ]; then
+  echo_prompt "Loading items from valid Item Definition File..."
+fi
+sed "s%xxBASE_DIRxx%`pwd`%g" $BASE/conf/itemdefs.when | $WHEN --item-add -
+res=$?
+if [ -z "$QUIET" ]; then
+  if [ "$res" = "0" ]; then
+    echo_ok
+  else
+    echo_fail
+  fi
+else
+  if [ "$res" != "0" ]; then
+    if [ -n "$BRIEF" ]; then
+      echo_err "FAIL:LOAD_VALID_IDF"
+    fi
+  fi
+fi
+
+if [ -z "$QUIET" ]; then
+  echo_prompt "Discarding items from invalid Item Definition Files..."
+fi
+$WHEN --item-add $BASE/conf/itemdefs-fail01.when
+res1=$?
+$WHEN --item-add $BASE/conf/itemdefs-fail02.when
+res2=$?
+$WHEN --item-add $BASE/conf/itemdefs-fail03.when
+res3=$?
+if [ -z "$QUIET" ]; then
+  if [ "$res1" != "0" -a "$res2" != "0" -a "$res3" != "0" ]; then
+    echo_ok
+  else
+    echo_fail
+  fi
+else
+  if [ "$res1" != "0" -a "$res2" != "0" -a "$res3" != "0" ]; then
+    if [ -n "$BRIEF" ]; then
+      echo_err "FAIL:LOAD_INVALID_IDF"
+    fi
+  fi
+fi
+
 # perform interactive-like tests
 if [ -z "$QUIET" ]; then
   echo_prompt "Performing other automated tests."
 fi
-discard_out $WHEN --run-condition Cond08-CommandLine    # 1. cmdline-activated
+discard_out $WHEN --run-condition Cond08-CommandLine    # 1a. cmdline-activated
+discard_out $WHEN --run-condition Cond_IDF07-UserEvent  # 1b. cmdline-activated
 discard_out touch $BASE/temp/file_notify_test           # 2. inotify
 discard_out touch $BASE/temp/start_dbus.tmp             # 3. emit signals
 # ...

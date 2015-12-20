@@ -1,0 +1,8 @@
+# This definition file will fail to load for unsatisfied dependency
+
+[CondFail01]
+type: condition
+based on: time
+task names: NonExistentTask
+
+# end.

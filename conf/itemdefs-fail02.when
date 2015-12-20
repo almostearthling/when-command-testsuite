@@ -1,0 +1,9 @@
+# This definition file will fail to load for unsatisfied dependency
+
+[CondFail02]
+type: condition
+based on: user_event
+task names: Task_IDF01-Succeed
+event name: NonExistentHandler
+
+# end.

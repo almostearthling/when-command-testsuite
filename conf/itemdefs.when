@@ -1,0 +1,74 @@
+# Test item definition file n. 1
+# These items are all valid and should be loaded by the running applet
+
+# 1. Tasks
+[Task_IDF01-Succeed]
+type: task
+command: xxBASE_DIRxx/taskcmd.sh
+
+[Task_IDF02-Fail]
+type: task
+command: xxBASE_DIRxx/taskcmd.sh -e
+check for: failure, status, 2
+
+# 2. Conditions
+[Cond_IDF01-Interval]
+type: condition
+task names: Task_IDF02-Fail, Task_IDF01-Succeed
+based on: interval
+interval minutes: 2
+break on: failure
+
+[Cond_IDF02-Time]
+# This condition will be just loaded and not tested
+type: condition
+task names: Task_IDF01-Succeed
+based on: time
+year: 2000
+month: 4
+day of week: saturday
+
+[Cond_IDF03-Command]
+type: condition
+task names: Task_IDF02-Fail
+based on: command
+command: xxBASE_DIRxx/test_fail.sh -l
+check for: stderr, error
+repeat checks: false
+
+[Cond_IDF04-Idle]
+type: condition
+task names: Task_IDF01-Succeed
+based on: idle_session
+idle minutes: 1
+repeat checks: false
+
+[Cond_IDF05-Event]
+type: condition
+task names: Task_IDF01-Succeed
+based on: event
+event type: command_line
+
+[Cond_IDF06-FileChanges]
+type: condition
+task names: Task_IDF01-Succeed
+based on: file_change
+watched path: xxBASE_DIRxx/temp
+
+[Cond_IDF07-UserEvent]
+type: condition
+task names: Task_IDF01-Succeed
+based on: user_event
+event name: UserEvent01
+
+# 3. An event that listens to our specially crafted signal emitter
+[UserEvent01]
+bus: session
+bus name: it.jks.EventEmitter
+object path: /it/jks/EventEmitter
+interface: it.jks.EventEmitter
+signal: PushSignal_is
+parameters:
+    2, equal, AnZo
+
+# end.

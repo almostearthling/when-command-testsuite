@@ -63,6 +63,7 @@ event name: UserEvent01
 
 # 3. An event that listens to our specially crafted signal emitter
 [UserEvent01]
+type: signal_handler
 bus: session
 bus name: it.jks.EventEmitter
 object path: /it/jks/EventEmitter

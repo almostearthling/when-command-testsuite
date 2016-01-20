@@ -119,14 +119,16 @@ fi
 # verify that When is installed, and if not bail out
 if [ -z "$QUIET" ]; then
   echo_prompt "Verifying When installation... "
-  if [ -d $CONF_BASE -a -f $CONF_BASE/when-command.conf ]; then
+  if [ -f $WHEN -a -d $CONF_BASE -a -f $CONF_BASE/when-command.conf ]; then
     echo_ok
+    echo_prompt "Testing `$WHEN --version`"
+    echo
   else
     echo "not installed: please install it and run tests."
     exit_fail
   fi
 else
-  if [ ! -d $CONF_BASE -o ! -f $CONF_BASE/when-command.conf ]; then
+  if [ ! -f $WHEN -o ! -d $CONF_BASE -o ! -f $CONF_BASE/when-command.conf ]; then
     if [ -n "$BRIEF" ]; then
       echo_err "FAIL:NO_WHEN"
     fi
